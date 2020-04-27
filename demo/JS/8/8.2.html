@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+    </head>
+    <style media="screen">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background: #3e3e3e;
+        }
+        #box {
+            width: 600px;
+            margin: 20px auto;
+        }
+        .list {
+            position: relative;
+            width:600px;
+            height: 144px;
+            margin-bottom: 10px;
+            overflow:hidden;
+            border-radius: 8px;
+        }
+        .list ul {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 144px;
+        }
+        .list li {
+            display: inline;
+            float: left;
+            width: 144px;
+            height: 144px;
+            list-style: none;
+            background: black;
+            margin-right: 8px;
+            border-radius:8px;
+        }
+        .list li img {
+            float:left;
+            width: 124px;
+            height: 100px;
+            border-radius: 5px;
+            margin: 10px 0 0 10px;
+        }
+        .list li p {
+            float: left;
+            color: white;
+            width: 100%;
+            text-align: center;
+            line-height: 34px;
+        }
+        .scrollBar {
+            position: relative;
+            height: 19px;
+            background: #0a0a0a;
+            overflow: hidden;
+        }
+        .scrollBar .barL,
+        .scrollBar .barR,
+        .scrollBar .barLStop,
+        .scrollBar .barRStop {
+            position: absolute;
+            top: 0;
+            width: 28px;
+            height: 19px;
+            cursor:pointer;
+            background: url(03.gif) no-repeat
+        }
+        .scrollBar .barL {
+            left: 0;
+        }
+        .scrollBar .barR {
+            right: 0;
+            background-position: right 0;
+        }
+        .scrollBar .barLStop {
+            left: 0;
+            background-position: 0 -19px;
+            cursor: default;
+        }
+
+        .scrollBar .barRStop {
+            right: 0;
+            background-position: right -19px;
+            cursor: default;
+        }
+        .scrollBar .barM {
+            position: relative;
+            height: 15px;
+            border: 1px solid #545454;
+            border-width: 1px 0;
+            margin: 0 28px;
+            padding: 1px 0;
+            z-index: 1;
+            cursor: pointer;
+        }
+        .scrollBar .bar {
+            position: absolute;
+            top: 1px;
+            left: 0;
+            width: 150px;
+            height: 15px;
+            cursor: e-resize;
+            background: url(01.gif) repeat-x;
+        }
+        .scrollBar .bar .l,
+        .scrollBar .bar .r {
+            position: absolute;
+            top: 0;
+            width: 6px;
+            height: 15px;
+            background: url(02.gif) no-repeat;
+        }
+        .scrollBar .bar .l {
+            left: -6px;
+        }
+        .scrollBar .bar .r {
+            right: -6px;
+            background-position: right 0;
+        }
+        #describ {
+            color: #ccc;
+            width: 578px;
+            padding: 10px;
+            margin: 0 auto;
+            line-height: 2;
+            border: 1px dashed #666;
+        }
+        #describ dd {
+            margin-left: 2em;
+        }
+        .ta-r {
+            text-align: right;
+        }
+    </style>
+    <script type="text/javascript">
+        function getStyle (obj, attr) {
+            return parseFloat(obj.currentStyle ? obj.currentStyle[attr] : getComputedStyle(obj, null)[attr])
+        }
+        window.onload = function () {
+            var box = document.getElementById('box')
+            var scrollBar = document.getElementsByClassName('scrollBar')[0]
+            var list = document.getElementsByClassName('list')[0]
+            var ul = document.getElementsByTagName('ul')[0]
+            var li = document.getElementsByTagName('li')
+            var barL = document.getElementsByClassName('barL')[0]
+            var barM = document.getElementsByClassName('barM')[0]
+            var barR = document.getElementsByClassName('barR')[0]
+            var bar = document.getElementsByClassName('bar')[0]
+            var maxL = barM.offsetWidth - bar.offsetWidth
+            var marginRight = getStyle(li[0], 'marginRight')
+            var timer = null, scale = 0, dixX = 0
+
+            //set the width of img list dynamically
+            ul.style.width = (li[0].offsetWidth + marginRight) * li.length + 'px'
+
+            //setting the scrollBar mouse down event to show the drag bar movement
+            bar.onmousedown = function (event) {
+                var event = event || window.event
+                //get the start position
+                disX = event.clientX - bar.offsetLeft
+                //set the mouse over event after mouse down the bar
+                document.onmousemove = function (event) {
+                    var event = event || window.event
+                    //get the relative position
+                    var l = event.clientX - disX
+                    //estimate the actual bar position
+                    if (l <= 0) {
+                        l = 0
+                    } else if (l >= maxL) {
+                        l = maxL
+                    }
+                    bar.style.left = l + 'px'
+                    //set the scale to match the img and the bar
+                    scale = l / maxL
+                    return false
+                }
+                //set mouse up event after mouse move
+                document.onmouseup = function () {
+                    //do the move to img and bar,and initialize the document event
+                    startMove(ul, parseInt(list.offsetWidth + marginRight - ul.offsetWidth) * scale)
+                    isStop()
+                    document.onmousemove = null
+                    document.onmouseup = null
+                }
+                return false
+            }
+            //prevent bar click event to bubble
+            bar.onclick = function (event) {
+                (event || window.event).cancelBubble = true
+            }
+            //set the bar left/right button's mouseover/keydown event
+            barL.onmouseover = barR.onmouseover = document.onkeydown = function (event) {
+                clearInterval(timer)
+                var event = event || window.event
+                var speed = 0
+                //estimate the target event and set the change speed
+                if (this == barR || event.keyCode == 39) {
+                    speed = 5
+                } else if (this == barL || event.keyCode == 37) {
+                    speed = -5
+                }
+                //do the change/move
+                timer = setInterval(function () {
+                    togetherMove(getStyle(bar, 'left') + speed, 1)
+                }, 30)
+            }
+            //set the bar left/right button's mouseout/keyup event
+            barL.onmouseout = barR.onmouseout = document.onkeyup = function () {
+                clearInterval(timer)
+            }
+            //set the bar area click event, make the img match to bar position
+            barM.onclick = function (event) {
+                //get the mouse click position
+                var target = (event || window.event).clientX - box.offsetLeft - this.offsetLeft - bar.offsetWidth / 2
+                togetherMove(target)
+            }
+            //set the mouse over event to box
+            box.onmouseover = function (event) {
+                var event = event || window.event
+                //declare function mouseWheel
+                function mouseWheel(event) {
+                    //wheelDelta belong to other browser without firefox,which has detail.
+                    var delta = event.wheelDelta ? event.wheelDelta : - event.detail * 40
+                    var target = delta > 0 ? -50 : 50
+                    togetherMove(bar.offsetLeft + target)
+                }
+                this.onmousewheel = function (e) {
+                    mouseWheel(e)
+                }
+                this.ondommousescroll = function (e) {
+                    mouseWheel(e)
+                }
+            }
+            //declare function to make the img and bar move at the sametime
+            function togetherMove(target, buffer) {
+                //estimate the extrem condition
+                if (target <= 0) {
+                    if (timer) {
+                        clearInterval(timer)
+                    }
+                    target = 0
+                } else if (target >= maxL) {
+                    if (timer) {
+                        clearInterval(timer)
+                    }
+                    target = maxL
+                }
+                //set the scale to get the same level of img and bar
+                scale = target / maxL
+
+                startMove(ul, parseInt(list.offsetWidth + marginRight - ul.offsetWidth) * scale, function () {
+                    isStop()
+                }, buffer)
+                startMove(bar,target, function () {
+                    isStop()
+                }, buffer)
+            }
+            //declare function to change the barL and barR btn when the condition meet
+            function isStop () {
+                barL.className = 'barL'
+                barR.className = 'barR'
+                switch(bar.offsetLeft) {
+                    case 0:
+                        barL.classList.contains('barLStop') || (barL.classList.add('barLStop'))
+                        break;
+                    case maxL:
+                        barR.classList.contains('barRStop') || (barR.classList.add('barRStop'))
+                        break
+                }
+            }
+            isStop()
+        }
+
+        function startMove(obj, target, fn, buffer) {
+            clearInterval(obj.timer);
+            obj.timer = setInterval(function() {
+                doMove(obj, target, fn, buffer)
+            }, 25)
+        }
+
+        function doMove(obj, target, fn, buffer) {
+            var left = getStyle(obj, "left");
+            var speed = (target - left) / (buffer || 5);
+            speed = speed > 0 ? Math.ceil(speed) : Math.floor(speed);
+            left == target ? (clearInterval(obj.timer), fn && fn()) : obj.style.left = left + speed + "px"
+        }
+    </script>
+    <body>
+        <div id="box">
+            <div class="list">
+                <ul>
+                    <li><img src="1.jpg" />
+                        <p>巫妖</p>
+                    </li>
+                    <li><img src="2.jpg" />
+                        <p>黑暗游侠</p>
+                    </li>
+                    <li><img src="3.jpg" />
+                        <p>烈焰之灵</p>
+                    </li>
+                    <li><img src="4.jpg" />
+                        <p>末日使者</p>
+                    </li>
+                    <li><img src="5.jpg" />
+                        <p>骷髅弓箭手</p>
+                    </li>
+                    <li><img src="6.jpg" />
+                        <p>哈斯卡</p>
+                    </li>
+                    <li><img src="7.jpg" />
+                        <p>复仇之魂</p>
+                    </li>
+                    <li><img src="8.jpg" />
+                        <p>混沌骑士</p>
+                    </li>
+
+                </ul>
+            </div>
+            <!--/list-->
+            <div class="scrollBar">
+                <div class="barL"></div>
+                <div class="barM">
+                    <div class="bar">
+                        <div class="l"></div>
+                        <div class="r"></div>
+                    </div>
+                </div>
+                <div class="barR"></div>
+            </div>
+        <!--/scrollBar-->
+        </div>
+        <dl id="describ">
+            <dt>功能说明：</dt>
+            <dd>① 拖动滚动条，图片列表缓冲滑动至目标点；</dd>
+            <dd>② 滚动条两端鼠标移入自动滑动；</dd>
+            <dd>③ 滚动条滑动到两端自动更换为停止标识；</dd>
+            <dd>④ 点击滚动条黑色背景区，滚动条及图片列表缓冲滑动至目标点；</dd>
+            <dd>⑤ 支持键盘左右键；</dd>
+            <dd>⑥ 支持鼠标滚轮。</dd>
+        </dl>
+    </body>
+</html>

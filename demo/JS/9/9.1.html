@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <style media="screen">
+            * {
+                margin: 0;
+                padding: 0;
+            }
+            #menu {
+                position: absolute;
+                width: 100%;
+                bottom: 0;
+                text-align: center;
+            }
+        </style>
+        <script type="text/javascript">
+            window.onload = function () {
+                var menu = document.getElementById('menu')
+                var img = menu.getElementsByTagName('img')
+                var widths = []
+                for (var i = 0; i < img.length; i++) {
+                    widths.push(img[i].offsetWidth)
+                    img[i].width = parseInt(img[i].offsetWidth / 2)
+                }
+                document.onmousemove = function (event) {
+                    var event = event || window.event
+                    for (var i = 0; i < img.length; i++) {
+                        //get the middle point when mouse move, which is use to estimate when the img up to max
+                        var a = event.clientX - img[i].offsetLeft - img[i].offsetWidth / 2
+                        var b = event.clientY - img[i].offsetTop - menu.offsetTop - img[i].offsetHeight / 2
+                        //set the change speed rate
+                        var scale = 1 - Math.sqrt(a * a + b * b) / 200
+                        //set the limit**
+                        if (scale < 0.5) {
+                            scale = 0.5
+                        }
+                        img[i].width = widths[i] * scale
+                    }
+                }
+            }
+        </script>
+    </head>
+    <body>
+        <div id="menu">
+        	<img src="1.png" />
+            <img src="2.png" />
+            <img src="3.png" />
+            <img src="4.png" />
+            <img src="5.png" />
+        </div>
+    </body>
+</html>

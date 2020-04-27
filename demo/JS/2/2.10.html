@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>10.提示框效果</title>
+    <style media="screen">
+      div#outer {
+    border: 1px solid;
+    margin: 10px;
+    overflow: hidden;
+    text-align: center;
+    width: 750px;
+}
+h2 {
+    border: 1px solid;
+    margin: 0;
+    padding: 10px;
+}
+ul {
+    list-style-type: none;
+    margin: 5px 5px 10px 10px;
+    width: 350px;
+}
+li {
+    border: 1px solid;
+    background: grey;
+    cursor: crosshair;
+    width: 300px;
+    position: relative;
+    margin: 10px;
+    height: 150px;
+    float: left;
+}
+li a {
+    text-decoration: none;
+    color: white;
+    cursor: crosshair;
+}
+li a strong {
+    display: block;
+}
+img {
+    width: 300px;
+    position: absolute;
+    left: 0;
+    display: none;
+    top: 0;
+        zoom: 1.5;
+    border: 1px solid white;
+}
+    </style>
+    <script type="text/javascript">
+      window.onload = function() {
+        var li = document.getElementsByTagName('li')
+        var img = document.getElementsByTagName('img')
+        for (let i = 0; i < li.length; i++) {
+          li[i].onmouseover = function() {
+            img[i].style.display = 'block'
+            img[i].style.zIndex = 2
+
+          }
+          li[i].onmouseout = function() {
+            img[i].style.display = 'none'
+          }
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div id="outer">
+        <h2>英雄展示</h2>
+        <ul>
+          <li>
+                <a href="javascript:;" title="lich"><strong>lich</strong> 巫妖</a>
+                <img src="1.jpg" alt="巫妖" />
+            </li>
+            <li>
+                <a href="javascript:;" title="soul"><strong>soul</strong> 卓尔游侠</a>
+                <img src="2.jpg" alt="卓尔游侠" />
+            </li>
+            <li>
+                <a href="javascript:;" title="soul of fire"><strong>soul of fire</strong> 烈焰之灵</a>
+                <img src="3.jpg" alt="烈焰之灵" />
+            </li>
+            <li>
+                <a href="javascript:;" title="Doom"><strong>Doom</strong> 末日使者</a>
+                <img src="4.jpg" alt="末日使者" />
+            </li>
+        </ul>
+    </div>
+  </body>
+</html>

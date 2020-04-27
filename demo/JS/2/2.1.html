@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>1.点击按钮 出现下拉选项</title>
+    <style media="screen">
+      body,ul,li,button{margin:0;padding:0;}
+      ul{list-style-type:none;}
+      button{cursor:pointer;}
+      #outer{width:70px;margin:10px auto;}
+      #menu{margin-top:5px;background:#fff;border:1px solid #9a99ff;}
+      #menu li{width:100%;line-height:24px;vertical-align:top;cursor:pointer;}
+      #close{border-top:1px solid #9a99ff;}
+      #menu li{color:#00c;padding:0 0px;}
+      #menu li:hover{background:#d9e1f6;}
+      .hide {display:none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="outer">
+      <button type="button" name="button">点击出现下拉</button>
+      <ul id="menu" class='hide'>
+        <li> 选项一 </li>
+        <li> 选项二</li>
+        <li id='close'>关闭</li>
+      </ul>
+    </div>
+    <script type="text/javascript">
+      window.onload = function() {
+
+        var div = document.getElementsByTagName('div')[0]
+        div.addEventListener('click', function(e) {
+          var btn = document.getElementsByTagName('button')[0]
+          var menu = document.getElementById('menu')
+          var close = document.getElementById('close')
+          if (e.target == btn) {
+            menu.classList.toggle('hide')
+          } else if (e.target == close){
+            menu.classList.add('hide')
+          } else if (e.target != close){
+            alert('你选择的是' + e.target.innerText)
+            menu.classList.add('hide')
+          }
+
+      })
+    }
+    </script>
+  </body>
+</html>

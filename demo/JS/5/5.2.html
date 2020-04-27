@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <style media="screen">
+      html, body{
+        overflow: hidden;
+      }
+      body, div, ul, li{
+        margin: 0;
+        padding: 0;
+      }
+      #box ul{
+        list-style-type:none;
+        width: 900px;
+        margin:10px auto;
+      }
+      #box li{
+          width: 200px;
+        border: 1px solid #ddd;
+        padding: 1px;
+        margin-left:21px;
+        float:left;
+        height:100px;
+        cursor: pointer;
+      }
+      #box li img{
+        width: 200px;
+        height: 100px;
+      }
+      #box li.active{
+        border: 1px solid red;
+      }
+      #big{
+        width: 400px;
+        height: 200px;
+        display: none;
+        position: absolute;
+        border: 1px solid #ddd;
+        /* overflow:hidden */
+      }
+      #big div{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 400px;
+        height: 200px;
+        opacity: 0.5px;
+        background
+      }
+    </style>
+    <script type="text/javascript">
+      window.onload =function () {
+        var li = document.getElementsByTagName('li')
+        var big = document.getElementById('big')
+        for (var i = 0; i < li.length; i++) {
+          li[i].index = i;
+          //鼠标滑过事件
+          li[i].onmouseover = function () {
+            var bigImg = document.createElement('img')
+            //图片预加载
+            bigImg.src = li[this.index].getElementsByTagName('img')[0].src
+            bigImg.style.width = '400px'
+            bigImg.style.height = '200px'
+            //插入容器
+            big.appendChild(bigImg)
+            this.className = 'active'
+            big.style.display = 'block'
+          }
+          //鼠标移出事件
+          li[i].onmouseout = function () {
+            //取消选中效果和大图片显示效果，移除大图片
+            this.className = ''
+            big.style.display = 'none'
+            big.removeChild(big.lastChild)
+          }
+          li[i].onmousemove = function (event) {
+            //得到页面总宽度 - 鼠标所在水平位置 的差，即剩余宽度是否够bigImg放在右边，设置bigImg的水平位置
+            var iWidth =document.documentElement.offsetWidth - event.clientX
+            big.style.left = (iWidth < big.offsetWidth + 10 ? event.clientX - big.offsetWidth - 5 : event.clientX + 5) + 'px'
+            //设置bigImg的垂直位置
+            big.style.top = event.clientY + 10 +'px'
+          }
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div id="box">
+      <ul>
+      	<li><img src="1.jpg" /></li>
+        <li><img src="2.jpg" /></li>
+        <li><img src="3.jpg" /></li>
+        <li><img src="4.jpg" /></li>
+      </ul>
+    </div>
+    <div id="big">
+      <div></div>
+    </div>
+  </body>
+</html>

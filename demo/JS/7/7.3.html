@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <style media="screen">
+      body, div{
+        margin: 0;
+        padding: 0;
+      }
+      div{
+        position: absolute;
+        width: 66px;
+        height: 45px;
+        background: url(1.gif) no-repeat;
+        top: 100px;
+        left: 50px;
+      }
+      p, button{
+        margin: 10px;
+      }
+    </style>
+    <script type="text/javascript">
+      window.onload = function () {
+        var div = document.getElementsByTagName('div')[0]
+        var btn = document.getElementsByTagName('button')
+        var p = document.getElementsByTagName('p')[0]
+
+        //setting the click event to button[0]
+        btn[0].onclick = function (event) {
+          (event || window.event).cancelBubble = true
+          clearEvent()
+          this.innerText +='(已激活)'
+          p.innerText = '鼠标点击页面，人物将移动至鼠标位置！'
+
+          //inside the btn click event, setting the click event to page to make the img move
+          document.onclick = function (event) {
+            var event = event || window.event
+            div.style.background = 'url(2.gif)no-repeat'
+            //make the img move to target(click) position
+            startMove(div,{x: event.clientX, y: event.clientY}, function () {
+              div.style.background = 'url(1.gif) no-repeat'
+            })
+            return false
+          }
+        }
+
+        //setting the click event to button[1]
+        btn[1].onclick = function (event) {
+          (event || window.event).cancelBubble = true
+          clearEvent()
+          this.innerText +='(已激活)'
+          p.innerHTML = '按住鼠标左键，在页面划动，人物将按照鼠标轨迹移动。'
+
+          // the array to save the move track
+          var pos = [{
+            x: div.offsetLeft,
+            y: div.offsetTop
+          }]
+
+          // inside the btn[1] click event, declare the mouse down event, which save the mouse down position(the start position of mouse move) to pos
+          document.onmousedown = function (event) {
+            var event = event || window.event
+            pos.push({
+              x: event.clientX,
+              y: event.clientY
+            })
+
+            //inside the mouse down event, declare the mouse move event, to save the mouse move track to pos
+            document.onmousemove = function (event) {
+              var event = event || window.event
+              pos.push({
+                x: event.clientX,
+                y: event.clientY
+              })
+              return false
+            }
+            return false
+          }
+
+          //inside the btn click event, setting the mouse up event to document to show the img mov e track according to mouse mover track
+          document.onmouseup = function () {
+            document.onmousemove = null
+            div.style.background = 'url(2.gif) no-repeat'
+            var timer = setInterval(function () {
+              if (pos.length == 0) {
+                clearInterval(timer)
+                div.style.background = "url(1.gif) no-repeat";
+                return;
+              }
+              div.style.left = pos[0].x + 'px'
+              div.style.top = pos[0].y + 'px'
+              pos.shift()
+            }, 30)
+          }
+        }
+
+        //initialize the document event
+        function clearEvent () {
+          document.onclick = null
+          document.onmousemove = null
+          document.onmousedown = null
+          document.onmouseup = null
+          for (var i = 0; i < btn.length; i++) {
+            btn[i].innerText = btn[i].innerText.replace('(已激活)', '')
+            btn[i].onmousedown = btn[i].onmouseup = function (event) {
+              (event || window.event).cancelBubble = true
+            }
+          }
+        }
+      }
+
+      //set interval according to obj move frame to make img move
+      function startMove (obj, target, fn) {
+        clearInterval(obj.timer)
+        obj.timer = setInterval(function () {
+          doMove(obj, target, fn)
+        }, 30)
+      }
+
+      // obj move frame
+      function doMove (obj, target, fn) {
+        var x = (target.x - obj.offsetLeft) / 5
+        var y = (target.y - obj.offsetTop) / 5
+        x = x > 0 ? Math.ceil(x) : Math.floor(x)
+        y = y > 0 ? Math.ceil(y) : Math.floor(y)
+        if(target.x == obj.offsetLeft && target.y == obj.offsetTop) {
+          clearInterval(obj.timer)
+          if (fn) {
+            fn()
+          }
+        } else {
+          obj.style.left = obj.offsetLeft + x + 'px'
+          obj.style.top = obj.offsetTop + y + 'px'
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <button type="button" name="button">根据鼠标点击位置移动</button>
+    <button type="button" name="button">根据标鼠标轨迹移动</button>
+    <p>请点击按钮激活功能！</p>
+    <div>
+    </div>
+  </body>
+</html>

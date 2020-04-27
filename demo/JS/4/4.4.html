@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <style media="screen">
+      body, div, span, ul, li, p {
+        margin: 0;
+        padding: 0;
+      }
+      ul {
+        list-style-type: none;
+      }
+      #star{
+        width: 800px;
+        position: relative;
+        margin: 10px auto;
+      }
+      #star ul,#star span {
+        float: left;
+        display: inline;
+        height: 19px;
+        line-height: 19px
+      }
+      #star ul {
+        margin: 0 10px;
+      }
+      #star li {
+        float:left;
+        width: 24px;
+        cursor: pointer;
+        text-indent: 99999px;
+        background: url(star.png) no-repeat;
+      }
+      #star strong {
+        color:#f60;padding-left:10px;
+      }
+      #star li.on {
+        background-position: 0 -28px;
+      }
+      #star p {
+        font-size: smaller;
+        position:absolute;
+        top: 20px;
+        width: 159px;
+        height:60px;
+        display: none;
+        background: url(icon.gif) no-repeat;
+        padding: 7px 10px 0;
+      }
+    </style>
+    <script type="text/javascript">
+      window.onload = function () {
+        var stars = document.getElementsByTagName('li')
+        var describ = document.getElementsByTagName('span')[1]
+        var p = document.getElementsByTagName('p')[0]
+        var ul = document.getElementsByTagName('ul')[0]
+        var msg = [
+          "很不满意|差得太离谱，与卖家描述的严重不符，非常不满",
+  				"不满意|部分有破损，与卖家描述的不符，不满意",
+  				"一般|质量一般，没有卖家描述的那么好",
+  				"满意|质量不错，与卖家描述的基本一致，还是挺满意的",
+  				"非常满意|质量非常好，与卖家描述的完全一致，非常满意"
+        ]
+        for (let i = 0; i < stars.length; i++) {
+          stars[i].onclick = function () {
+            for (let j = 0; j < stars.length; j++) {
+              stars[j].className = ''
+            }
+            for (let k = 0; k <= i; k++ ) {
+              stars[k].flag = true
+              stars[k].className = 'on'
+            }
+            describ.innerHTML = `<strong>${i+1}分</strong>(${msg[i].split('|')[1]})`
+          }
+          stars[i].onmouseover = function () {
+            for (let j = 0; j < stars.length; j++) {
+              if (!stars[j].flag) {
+                stars[j].className = ''
+              }
+            }
+            for (let k = 0; k <= i; k++ ) {
+              stars[k].className = 'on'
+            }
+            p.style.display = 'block';
+            p.style.left = ul.offsetLeft - 80 + i * this.offsetWidth + 'px'
+            p.innerHTML = `<strong><b>${i+1}</b> 分 ${msg[i].split('|')[0]}</strong> <br />${msg[i].split('|')[1]}`
+          }
+          stars[i].onmouseout = function () {
+            for (let j = 0; j < stars.length; j++) {
+              if (!stars[j].flag) {
+                stars[j].className = ''
+              }
+            }
+            p.style.display = 'none';
+          }
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div id="star">
+      <span>点击星星就能打分</span>
+      <ul>
+          <li><a href="javascript:;">1</a></li>
+          <li><a href="javascript:;">2</a></li>
+          <li><a href="javascript:;">3</a></li>
+          <li><a href="javascript:;">4</a></li>
+          <li><a href="javascript:;">5</a></li>
+      </ul>
+      <span></span>
+      <p></p>
+    </div>
+  </body>
+</html>

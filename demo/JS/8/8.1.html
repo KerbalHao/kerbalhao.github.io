@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <style media="screen">
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      #desk {
+        width: 426px;
+        height: 640px;
+        background: url(1.png);
+        position: relative;
+        margin: 10px  auto;
+      }
+      #lock {
+        width: 358px;
+        height: 62px;
+        bottom: 33px;
+        left: 50%;
+        transform: translateX(-50%);
+        position: absolute;
+      }
+      #lock span {
+        position: absolute;
+        width: 93px;
+        height: 62px;
+        cursor: pointer;
+        background: url(btn.jpg) no-repeat;
+      }
+    </style>
+    <script type="text/javascript">
+      window.onload = function () {
+        var desk = document.getElementById('desk')
+        var btn = document.getElementsByTagName('span')[0]
+        var lock = document.getElementById('lock')
+        var maxL = lock.clientWidth - btn.offsetWidth
+        var disX = 0
+
+        btn.onmousedown = function (e) {
+          var e = e || window.event
+          //get the mouse down(start) position
+          disX = e.clientX - this.offsetLeft
+
+          document.onmousemove = function (e) {
+            var e = e || window.event
+            //get the mouse move distance between start position
+            var l = e.clientX - disX
+            console.log(l)
+            //set limit
+            if (l < 0) {
+              l = 0
+            } else if (l > maxL) {
+              l = maxL
+            }
+            btn.style.left = l + 'px'
+            //set condition to unlock
+            if (btn.offsetLeft == maxL) {
+              desk.style.background = 'url(2.png)'
+              lock.style.display = 'none'
+            }
+            return false;
+          }
+
+          //set mouse up event to all document
+          document.onmouseup = function () {
+            //initialize the document event
+            document.onmousemove = null
+            document.onmouseup = null
+
+            //estimate the btn.offsetLeft is larger than middle og maxL,to make the move happend (larger => unlock;else return 0)
+            btn.offsetLeft > maxL / 2 ? startMove(maxL, function (){
+              desk.style.background = 'url(2.png)'
+              lock.style.display = 'none'
+            }) : startMove(0)
+          }
+            return false
+        }
+
+        function startMove(iTarget, onEnd) {
+          clearInterval(btn.timer);
+          btn.timer = setInterval(function() {
+              doMove(iTarget, onEnd)
+          }, 30)
+        }
+
+        function doMove(iTarget, onEnd) {
+          var iSpeed = (iTarget - btn.offsetLeft) / 5;
+          iSpeed = iSpeed > 0 ? Math.ceil(iSpeed) : Math.floor(iSpeed);
+          iTarget == btn.offsetLeft ? (clearInterval(btn.timer), onEnd && onEnd()) : btn.style.left = iSpeed + btn.offsetLeft + "px"
+        }
+      }
+
+    </script>
+  </head>
+  <body>
+    <div id='desk' class='locked'>
+      <div id="lock">
+      <span></span>
+      </div>
+    </div>
+  </body>
+</html>

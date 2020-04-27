@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>5.鼠标移入/移出改变样式</title>
+    <style media="screen">
+      body {
+        width: 100%;
+        text-align: center
+      }
+      div {
+        width: 300px;
+        height: 500px;
+        background-color: silver;
+        font-size: 30px;
+        margin: 0 auto;
+      }
+      .hover {
+        color: red;
+        background-color: green;
+        border: 10px solid red;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="div1">鼠标移入改变样式，鼠标移出恢复。</div>
+  </body>
+  <script type="text/javascript">
+    let myDiv = document.getElementById('div1')
+    myDiv.onmouseover = function () {
+      myDiv.classList.add('hover')
+    }
+    myDiv.onmouseout = function () {
+      myDiv.classList.remove('hover')
+    }
+  </script>
+</html>

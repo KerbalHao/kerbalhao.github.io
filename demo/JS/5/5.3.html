@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <style media="screen">
+      body, ul, li {
+        margin: 0;
+        padding: 0;
+      }
+
+      #menu {
+        position: absolute;
+        top: -1111111px;
+        left: -11111111px;
+        width: 100px;
+        border: 1px solid #8f8f8f;
+        border-radius: 3px;
+        list-style-type: none;
+        padding: 2px;
+        background: white;
+      }
+      #menu li{
+        position:relative;
+        height: 24px;
+        padding-left: 24px;
+        background: #eaead7;
+      }
+      #menu li a{
+        display: block;
+        color: #333;
+        background: white;
+        padding-left: 5px;
+        text-decoration: none;
+      }
+      #menu li.active{
+        background: #999;
+      }
+      #menu li.active a{
+        color: white;
+        background: #8f8f8f;
+      }
+      #menu li em{
+        position:absolute;
+        top: 0;
+        left: 0;
+        width: 24px;
+        height: 24px;
+        background: url(ico.png) no-repeat;
+      }
+      #menu li em.cut{
+        background-position: 0 0;
+      }
+      #menu li em.copy{
+        background-position: 0 -24px;
+      }
+      #menu li em.paste{
+        background-position: 0 -48px;
+      }
+    </style>
+    <script type="text/javascript">
+      window.onload =function () {
+        var menu = document.getElementById('menu')
+        var li = document.getElementsByTagName('li')
+        //隐藏自定义右键菜单
+        menu.style.display = 'none'
+        //自定义菜单
+        document.oncontextmenu = function (event) {
+          //IE: window.event; chrome|firefox: event;
+          var event = event || window.event
+          menu.style.display = 'block';
+          menu.style.top = event.clientY + 'px'
+          menu.style.left = event.clientX + 'px'
+          //阻止默认右键菜单出现
+          return false
+        }
+        //页面点击后右键菜单消失
+        document.onclick = function () {
+          menu.style.display = 'none'
+        }
+        //菜单的鼠标移入移出事件
+        for (var i = 0; i < li.length; i++) {
+          li[i].onmouseover = function () {
+            this.className = 'active'
+          }
+          li[i].onmouseout = function () {
+            this.className = ''
+          }
+        }
+      }
+
+    </script>
+  </head>
+  <body>
+    <center>自定义右键菜单，请在页面点击右键查看效果。</center>
+    <ul id="menu">
+      <li>
+        <em class="cut"></em>
+        <a href="javascript:;">剪切</a>
+      </li>
+      <li>
+        <em class="copy"></em>
+        <a href="javascript:;">复制</a>
+      </li>
+      <li>
+        <em class="paste"></em>
+        <a href="javascript:;">粘贴</a>
+      </li>
+    </ul>
+  </body>
+</html>

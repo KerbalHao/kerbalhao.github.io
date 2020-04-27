@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>6.图片列表：鼠标移入/移出改变图片透明度</title>
+    <style media="screen">
+      ul li, img{
+        list-style-type: none;
+        width: 50%;
+
+      }
+      .current {
+        opacity: 1
+      }
+      li{
+        margin: 5px
+      }
+      img {
+        opacity: 0.5;
+      }
+    </style>
+    <script type="text/javascript">
+      window.onload = function() {
+        for (var i = 1; i < 5; i ++) {
+          var li = document.createElement('li')
+          li.innerHTML = `<img src=${i}.jpg>`
+          li.classList.add('imgs')
+          document.getElementById('gallery').appendChild(li)
+        }
+        var gallery = document.getElementById('gallery')
+        gallery.addEventListener('mouseover', function(e) {
+          if (e.target.hasAttribute('src')) {
+            e.target.style.opacity = 1
+            console.log(1)
+          }
+        })
+        gallery.addEventListener('mouseout', function(e) {
+          if (e.target.hasAttribute('src')) {
+            e.target.style.opacity = 0.5
+            console.log(11)
+          }
+        })
+      }
+    </script>
+  </head>
+  <body>
+    <ul id='gallery'>
+
+    </ul>
+  </body>
+</html>

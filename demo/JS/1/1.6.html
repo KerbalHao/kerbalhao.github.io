@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>6.记住密码提示框</title>
+    <style media="screen">
+      #outer {
+        text-align: center
+      }
+      #tips {
+        border: 1px solid red;
+        background: orange;
+        padding: 5px;
+        width: 200px;
+        margin: auto
+      }
+      .hidden {
+        display:none
+      }
+    </style>
+  </head>
+  <body>
+    <div id="outer">
+        <label><input type="checkbox" />两周内自动登陆</label>
+        <div id="tips" class='hidden'>为了您的信息安全，请不要在网吧或公用电脑上使用此功能！</div>
+    </div>
+    <script type="text/javascript">
+      window.onload = function () {
+        let tip = document.getElementById('tips')
+        let checkbox = document.getElementsByTagName('label')[0]
+        checkbox.onmouseover = function () {
+          tip.classList.remove('hidden')
+        }
+        checkbox.onmouseout = function () {
+          tip.classList.add('hidden')
+        }
+      }
+    </script>
+  </body>
+</html>

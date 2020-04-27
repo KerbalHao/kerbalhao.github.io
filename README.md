@@ -1,0 +1,1 @@
+personal blog powered by [Hexo](https://hexo.io/zh-cn/) and [Icarus}(https://github.com/ppoffice/hexo-theme-icarus), modified by [removeif](https://github.com/removeif/hexo-theme-amazing)

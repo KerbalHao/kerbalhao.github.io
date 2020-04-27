@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <style media="screen">
+            * {
+                margin: 0;
+                padding: 0;
+            }
+            ul {
+                list-style-type: none;
+            }
+            body {
+                background:black;
+                text-align: center;
+            }
+            #box {
+                position: relative;
+                width: 492px;
+                height: 172px;
+                background: white;
+                border-radius: 5px;
+                border: 8px solid white;
+                margin: 10px auto;
+                cursor: pointer;
+            }
+            #box .list {
+                position: relative;
+                width: 490px;
+                height: 170px;
+                overflow: hidden;
+            }
+            #box .list ul {
+                position: absolute;
+                top: 0;
+                left: 0;
+            }
+            #box .list li {
+                width: 490px;
+                height: 170px;
+                overflow: hidden;
+            }
+            #box .count {
+                position: absolute;
+                right: 0;
+                bottom: 5px;
+            }
+            #box .count li {
+                color: white;
+                float: left;
+                width: 20px;
+                height: 20px;
+                cursor: pointer;
+                margin-right: 5px;
+                overflow: hidden;
+                background: #F90;
+                opacity: 0.7;
+                border-radius: 20px;
+            }
+            #box .count li.current {
+                color: white;
+                opacity: 1;
+                font-weight: 700;
+                background: #F60;
+            }
+            #tmp {
+                width: 100px;
+                height: 100px;
+                background: red;
+                position: absolute
+            }
+        </style>
+        <script type="text/javascript">
+            var $ = function (id) {
+                return typeof id === 'string' ? document.getElementById : id
+            }
+
+            var $$ = function (tagName, aparent) {
+                return (aparent || document).getElementsByTagName(tagName)
+            }
+
+            //declare a class
+            var AutoPlay = function (id) {
+                this.initialize(id)
+            }
+
+            AutoPlay.prototype = {
+                // to initialize the class AutoPlay
+                initialize: function (id) {
+                    this.flag = true
+                    var that = this
+                    this.box = document.getElementById(id)
+                    console.log(this.box)
+                    this.ul = this.box.getElementsByTagName('ul')[0]
+                    this.img = this.box.getElementsByTagName('img')
+                    this.autoTimer = null
+                    this.timer = null
+                    this.now = 0
+                    this.creatBtn()
+                    this.btn = $$('li', this.count)
+                    this.toggle()
+                    this.autoTimer = setInterval(function () {
+                        that.next()
+                    }, 3000)
+                    this.box.onmouseover = function () {
+                        clearInterval(that.autoTimer)
+                    }
+                    this.box.onmouseout = function () {
+                        that.autoTimer = setInterval(function () {
+                            that.next()
+                        }, 3000)
+                    }
+                    //set the count btn's mouseover event
+                    for (var i = 0; i < this.btn.length; i++) {
+                        this.btn[i].index = i
+                        this.btn[i].onmouseover = function () {
+                            that.now = this.index
+                            that.toggle()
+                        }
+                    }
+                },
+
+                //declare the function to creat the count btn
+                creatBtn:function () {
+                    this.count = document.createElement('ul')
+                    this.frag = document.createDocumentFragment()
+                    this.count.className = 'count'
+                    for (var i = 0; i < this.img.length; i++) {
+                        var li = document.createElement('li')
+                        li.innerHTML = i + 1
+                        this.frag.appendChild(li)
+                    }
+                    this.count.appendChild(this.frag)
+                    this.box.appendChild(this.count)
+                },
+
+                //declare the btn and the imgs change function
+                toggle: function () {
+                    for (var i = 0; i < this.btn.length; i++) {
+                        this.btn[i].className = ''
+                    }
+                    this.btn[this.now].className = 'current'
+                    this.doMove(-(this.now * this.img[0].offsetHeight))
+                },
+
+                // //declare the function to call the toggle
+                next: function () {
+                    this.flag = this.now == this.btn.length && false
+                    this.flag = this.now == 0 && true
+                    this.flag ? (this.now++) : (this.now--)
+                    this.toggle()
+                },
+
+                //declare the move frame function
+                doMove: function (target) {
+                    var that = this
+                    clearInterval(this.timer)
+                    this.timer = setInterval(function () {
+                        var speed = (target - that.ul.offsetTop) / 5
+                        speed = speed > 0 ? Math.ceil(speed) : Math.floor(speed)
+                        that.ul.offsetTop == target ? clearInterval(that.timer) : (that.ul.style.top = that.ul.offsetTop + speed + 'px')
+                    }, 30)
+                }
+            }
+            window.onload = function () {
+                new AutoPlay('box')
+            };
+        </script>
+    </head>
+    <body>
+        <div id="box">
+            <div class="list">
+                <ul>
+                    <li><img src="5.jpg" width="490" height="170" /></li>
+                    <li><img src="6.jpg" width="490" height="170" /></li>
+                    <li><img src="7.jpg" width="490" height="170" /></li>
+                    <li><img src="8.jpg" width="490" height="170" /></li>
+                </ul>
+            </div>
+        </div>
+    </body>
+</html>

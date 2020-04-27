@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <style media="screen">
+      html ,body, div, ,h2, p, strong, span{
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        overflow: hidden;
+      }
+      body{
+        background: black
+      }
+      p{
+        padding: 0 10px;
+        margin-top: 10px;
+      }
+      span{
+        color: #ff0;
+        padding-left: 5px;
+      }
+      #container {
+        width: 400px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        /* 注意 如果使用transform来设置居中，相关元素的offsetLeft会被设置在元素的中间，而不是左边开始的地方*/
+        /* transform: translate(-50%, -50%); */
+        background: grey;
+        color: white;
+        border: 2px solid white;
+        margin: -75px 0 0 -150px;
+
+      }
+      #container h2{
+        height: 25px;
+        cursor: move;
+        border-bottom: 2px solid #ccc;
+        background: #222;
+        text-align: right;
+        margin: 0px;
+        padding:  10px;
+      }
+      #container h2 a{
+        float:right;
+        width: 165px;
+        font-size: 20px;
+        display: block;
+        line-height: 24px;
+        color: white;
+        text-decoration: none;
+      }
+    </style>
+    <script type="text/javascript">
+      window.onload = function () {
+        var header = document.getElementsByTagName('h2')[0]
+        var link = document.getElementsByTagName('a')[0]
+        var container = document.getElementById('container')
+        var span = document.getElementsByTagName('span')
+        var drag = false
+        var disX = disY = 0
+        var position = [{
+          x: container.offsetLeft,
+          y: container.offsetTop
+        }]
+        //鼠标按下，激活拖拽
+        header.onmousedown = function (event) {
+          var event = event || window.event
+          drag = true
+          //记录鼠标在容器中的位置
+          disX = event.clientX - container.offsetLeft
+          disY = event.clientY - container.offsetTop
+          console.log('cX' + event.clientX + 'cl' +container.offsetLeft )
+          position.push({
+            x: container.offsetLeft,
+            y: container.offsetTop
+          })
+          console.log(this == event.target)
+          if (this.setCapture) {
+            this.setCapture()
+          }
+          //阻止冒泡和默认行为
+          return false;
+        }
+        //拖拽开始
+        document.onmousemove = function (event) {
+          if (!drag) {
+            return
+          }
+          var event = event || window.event
+          //计算容器的left 和 top, 准备设置容器位置
+          var left = event.clientX - disX
+          var top = event.clientY - disY
+          //鼠标可以移动的最大Left|Top(页面宽|高度 - 容器宽|高度)
+          var maxL = document.documentElement.clientWidth - container.offsetWidth
+          var maxT = document.documentElement.clientHeight - container.offsetHeight
+          //计算边界,设置容器位置
+          left = left < 0 ? 0 : left > maxL ? maxL : left
+          // left = left
+          top = top < 0 ? 0 : top > maxT ? maxT : top
+          // top = top
+          container.style.marginTop = container.style.marginLeft = 0;
+          container.style.left = left + 'px'
+          container.style.top = top + 'px'
+          //记录鼠标轨迹
+          position.push({
+            x: left,
+            y: top
+          })
+
+          status()
+
+          return false
+        }
+        //鼠标释放, 结束拖拽
+        document.onmouseup = window.onblur = header.onlosecapture = function () {
+          drag = false
+          if (header.releaseCapture) {
+            header.releaseCapture()
+          }
+          status()
+        }
+
+        //回放拖放轨迹
+        link.onclick = function () {
+          if (position.length == 1) {
+            return
+          }
+          //设置定时器
+          var timer = setInterval(function () {
+            //新声明一个变量a(another)position,用于存放鼠标的上一次轨迹，通过判断aposition是否能从position中取得元素，对容器的left和top进行设置。
+            var aposition = position.pop()
+            aposition ? (container.style.left = aposition.x + 'px', container.style.top = aposition.y + 'px', status()) : clearInterval(timer)
+          }, 30)
+
+          this.focus = false;
+          return false
+        }
+
+        //阻止冒泡
+        link.onmousedown = function (event) {
+          (event || window.event).cancelBubble = true
+        }
+
+        //坚挺状态函数
+        function status () {
+          span[0].innerHTML = drag
+          span[1].innerHTML = container.offsetTop
+          span[2].innerHTML = container.offsetLeft
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div id="container">
+      <h2><a href="javascript:;">点击回放拖动轨迹</a></h2>
+      <p><strong>Drag :</strong><span></span></p>
+      <p><strong>offsetTop :</strong><span></span></p>
+      <p><strong>offsetLeft :</strong><span></span></p>
+    </div>
+  </body>
+</html>

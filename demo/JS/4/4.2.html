@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <style media="screen">
+      body, ul, li{
+        margin:0;
+        padding: 0;
+        background: black;
+      }
+      ul {
+        list-style-type:none;
+      }
+      #container {
+        margin: 10px auto;
+        border: 1px solid white;
+        border-radius: 20px;
+        width: 500px;
+        height:250px;
+        overflow:hidden;
+
+        position:relative;
+      }
+      #container .list {
+        position: relative;
+        width: 500px;
+        height: 250px;
+        overflow: hidden;
+        background:white;
+      }
+      #container .list li {
+        position: absolute;
+        top: 0;
+        left: 0;
+        opacity: 0;
+      }
+      #container .list li.current {
+        opacity: 1;
+      }
+      .icon {
+        position:absolute;
+        bottom: 3px;
+        right:15px;
+      }
+      .icon span {
+        float: left;
+        display:block;
+        margin-right: 5px;
+        width: 20px;
+        height: 20px;
+        border: solid orange;
+        border-radius: 20px;
+        background: orange;
+        text-align: center;
+        color: white;
+        opacity: 0.7;
+        cursor: pointer;
+      }
+      .icon span.current{
+        opacity: 1
+      }
+    </style>
+    <script type="text/javascript">
+      window.onload = function () {
+        var timer = null
+        var container = document.getElementById('container')
+        var items = document.querySelectorAll('li')
+        var icons = document.querySelectorAll('span')
+        let opa = null
+        var index = 0
+        var flag = true
+
+        //切换索引图标
+        for (var i = 0; i < icons.length; i++) {
+          icons[i].index = i
+          icons[i].onmouseover = function () {
+            show(this.index)
+          }
+        }
+
+        //鼠标滑过，停止定时器
+        container.onmouseover = function () {
+          clearInterval(timer)
+        }
+
+        //鼠标移出，启动计时器
+        container.onmouseout = function () {
+          autoPlay()
+        }
+
+        //自动播放函数
+        function autoPlay () {
+          timer = setInterval(function () {
+            flag ? index++ : index--
+            if (index >= items.length) {
+              index = items.length - 2
+              flag = false
+            } else if (index <= 0) {
+              index = 0
+              flag = true
+            }
+             index = index % items.length
+            show(index)
+          }, 2000)
+        }
+        autoPlay()
+
+        //图片切换以及动画效果
+        function show (a) {
+          var opacity = 0
+
+          //自动播放时的索引图标切换
+          for (var i = 0; i < icons.length; i++) {
+            icons[i].className = ''
+          }
+          icons[a].className = 'current'
+          clearInterval(opa)
+
+          // 将图片的透明度重置为0
+          for (var i = 0; i < items.length; i++) {
+            items[i].style['opacity'] = 0
+          }
+
+          //设置定时器，图片的透明度逐渐增加，实现动画效果
+          opa = setInterval(function () {
+            opacity += 2
+            if (opacity > 100) {
+              opacity = 100
+            }
+            items[a].style['opacity'] = opacity / 100
+            if (opacity == 100) {
+              clearInterval(opa)
+            }
+          }, 20)
+        }
+      }
+
+    </script>
+  </head>
+
+  <body>
+    <div id="container">
+      <ul class='list'>
+        <li class='current'><img src="1.jpg" width=500px></li>
+        <li><img src="2.jpg" width=500px alt=""></li>
+        <li><img src="3.jpg" width=500px alt=""></li>
+        <li><img src="4.jpg" width=500px alt=""></li>
+      </ul>
+      <p class='icon'>
+        <span class='current'>1</span>
+        <span>2</span>
+        <span>3</span>
+        <span>4</span>
+      </p>
+    </div>
+  </body>
+</html>

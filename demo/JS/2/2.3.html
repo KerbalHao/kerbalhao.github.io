@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>3.输入数字求和</title>
+    <style media="screen">
+      #outer {
+        text-align: center
+      }
+    </style>
+    <script type="text/javascript">
+      window.onload = function(){
+
+        var input = document.getElementsByTagName('input')[0]
+        var button = document.getElementsByTagName('button')[0]
+        var sum = document.getElementsByTagName('strong')[0]
+        input.onkeyup = function() {
+          var reg = this.value.match(/[^(\d)|(),]/)
+          if(reg) {
+            alert("请输入数字并以','分隔")
+            this.value = this.value.replace(/[^(\d)|(,)]/,"")
+          }
+        }
+        button.onclick = function() {
+          var nums = input.value.split(','),
+          result = 0
+          for (let i = 0; i < nums.length; i++) {
+            result += parseInt(nums[i])
+          }
+          sum.innerText = result
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div id="outer">
+        <label><input type="text" placeholder="输入数字求和，数字之间用半角','号分隔" size='50'/></label>
+        <p><button>求和</button></p>
+        <strong class="sum"></strong>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <style media="screen">
+            * {
+                margin: 0;
+                padding: 0
+            }
+            body {
+                background: url(bg.png);
+                overflow:hidden;
+            }
+            #content {
+                position:relative;
+                width: 410px;
+                height: 570px;
+                margin: 10px auto;
+            }
+            #content li {
+                float: left;
+                width: 82px;
+                height: 190px;
+                overflow: hidden;
+            }
+            #content li img {
+                width: 82px;
+                height: 190px;
+            }
+            #content li.hig {
+                width: 78px;
+                height: 186px;
+                overflow: hidden;
+                border: 2px dashed yellow;
+            }
+            #content li.hig img {
+                width: 78px;
+                height: 186px;
+                opacity: 0.5;
+            }
+            #mask {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 410px;
+                height: 570px;
+                background: red;
+                opacity: 0;
+            }
+            button {
+                cursor: pointer;
+            }
+            #avatar {
+                text-align: center;
+                margin: 10px 0;
+            }
+            #avatar img {
+                width: 100px;
+                height: 100px;
+                border-radius: 5px;
+                margin: 0 5px;
+                opacity:0.5px;
+                cursor: pointer;
+            }
+            #avatar img:hover {
+                opacity: 1;
+            }
+            #avatar img.selected {
+                border: 2px solid yellow;
+                width: 96px;
+                opacity: 1;
+            }
+        </style>
+        <script type="text/javascript">
+            var zIndex = 1
+            window.onload = function () {
+                var avatar = document.getElementById('avatar')
+                var ava = avatar.getElementsByTagName('img')
+                var content = document.getElementById('content')
+                var li = content.getElementsByTagName('li')
+                var button = document.getElementsByTagName('button')[0]
+                var imgPath = 0, dateStart = null, pos = [], data = []
+                for (var i = 0; i < 15; i++) {
+                    data.push(i+1)
+                }
+                for (var i = 0; i < ava.length; i++) {
+                    ava[i].index = i
+                    //select the img as the picture puzzle model
+                    ava[i].onclick = function () {
+                        for (var i = 0; i < ava.length; i++) {
+                            ava[i].className = ''
+                        }
+                        this.className = 'selected'
+                        imgPath = this.index
+                        content.innerHTML = ''
+                        button.innerText = '开始游戏'
+
+                        //start to generate the puzzle area
+                        creatMask()
+                        data.sort(function (a, b) {
+                            return a - b
+                        })
+                        game(false)
+                    }
+                }
+
+                //generate the puzzle area
+                function createMask () {
+                    var mask = document.createElement('div')
+                    mask.id = 'mask'
+                    mask.style.zIndex = zIndex
+                    content.appendChild(mask)
+                }
+
+                //puzzle game function
+                function game (strat) {
+                    if (strat) {
+                        //randomize the img data when the flag is true
+                        data.sort(function(a, b) {
+                            return Math.random() > 0.5 ? -1 : 1
+                        })
+
+                        //generate the puzzle fragment, sorted in order
+                        var fragment = document.createDocumentFragment()
+                        for (var i = 0; i < data.length; i++) {
+                            var newLi = document.createElement('li')
+                            img = document.createElement('img')
+                            img.src = 'g' + imgPath + '/' + data[i] + '.png'
+                            newLi.appendChild(img)
+                            fragment.appendChild(newLi)
+                        }
+                        content.appendChild(fragment)
+                        content.style.background = 'url(g' + imgPath +'/bg.png) no-repeat'
+
+                        //transform the layout
+                        for (var i = 0; i < li.length; i++) {
+                            li[i].index = i
+                            li[i].style.top = li[i].offsetTop + 'px'
+                            li[i].style.left = li[i].offsetLeft + 'px'
+                            //save the origin position of the fragment
+                            pos.push({'left': li[i].offsetLeft, 'top': li[i].offsetTop})
+                        }
+                        //make the fragment able to drag
+                        for (var i = 0; i < li.length; i++) {
+                            li[i].style.position = 'absolute'
+                            li[i].style.margin = '0'
+                            drag(li[i])
+                        }
+                    }
+                }
+
+                //the function that drag the fragment
+                function drag (obj, handle) {
+                    var handle = handle || obj;
+                    handle.style.cursor = 'move'
+                    //active the fragment that need to be draged
+                    handle.onmousedown = function (event) {
+                        var event = event || windwo.event
+                        var disX = event.clientX - this.offsetLeft
+                        var disY = event.clientY - this.offsetTop
+                        var near = null
+                        obj.style.zIndex = zIndex++
+
+                        //make the draged fragment move
+                        document.onmousemove = function (event) {
+                            var event = event || window.event
+                            //get and set the left and top of the moving fragment and set the range
+                            var left = event.clientX - disX
+                            var top = event.clientY - disY
+                            var maxL = obj.parentElement.clientWidth - obj.offsetWidth
+                            var maxT = obj.parentElement.clientHeight - obj.offsetHeight
+                            left < 0 && (left = 0)
+                            left > maxL && (left = maxL)
+                            top < 0 && (top = 0)
+                            top > maxT && (top = maxT)
+                            obj.style.top = top + 'px'
+                            obj.style.left = left +'px'
+                            //initialize the li's className
+                            for (var i = 0; i < li.length; i++) {
+                                li[i].className = ''
+                            }
+
+                            //get the nearest fragment of the dragged one
+                            near = findNearest(obj)
+                            near && (near.className = 'hig')
+                            // console.log(near)
+                            return false
+                        }
+                        //declare the event mouse up
+                        document.onmouseup = function () {
+                            document.onmousemove = null
+                            document.onmouseup = null
+                            if (near) {
+                                //exchange the obj and near's index
+                                var tIndex = obj.index
+                                obj.index = near.index
+                                near.index = tIndex
+                                startMove(obj, pos[obj.index])
+                                startMove(near, pos[near.index], function () {
+                                    if (finish()) {
+                                        var hour = min = sec = 0
+                                        var dateNow = new Date()
+                                        var remain = parseInt((dateNow.getTime() - dateStart.getTime()) / 1000)
+
+                                        hour = parseInt(remian / 3600)
+                                        remian %= 3600
+                                        min = parseInt(remain / 60)
+                                        remain %= 60
+                                        sec = remain
+
+                                        alert(`完成拼图使用的时间为: ${hour}小时${min}分${sec}秒`)
+                                        creatMask()
+                                    }
+                                })
+                                near.className = ''
+                            }
+                            else {
+                                startMove(obj, pos[obj.index])
+                            }
+                            handle.releaseCapture && handle.releaseCapture()
+                        }
+                        this.setCapture && this.setCapture()
+                        return false
+                    }
+                }
+
+                //find the nearest fragment of the dragged fragment
+                function findNearest (obj) {
+                    var filterLi = []
+                    var distance = []
+                    for (var i = 0; i < li.length; i++) {
+                        console.log(li[i] != obj)
+                        if (li[i] != obj) {
+                            if (isButt(obj, li[i])) {
+                                distance.push(getDistance(obj, li[i]))
+                                filterLi.push(li[i])
+                            }
+                        }
+                        var minNum = Number.MAX_VALUE
+                        var minLi = null
+
+                        for (var i = 0; i < distance.length; i++) {
+                            distance[i] < minNum && (minNum = distance[i], minLi = filterLi[i])
+                        }
+                        return minLi
+                    }
+                }
+
+                game()
+
+                //begin the game
+                button.onclick = function () {
+                    dataStart = new Date()
+                    content.innerHTML = ''
+                    this.innerText = '重新开始'
+                    game(true)
+                }
+
+                //estimate is the game finished
+                function finish () {
+                    var tmp = []
+                    var success = true
+                    tmp.length = 0
+                    for (var i = 0; i < li.length; i++) {
+                        for (var j = 0; j < li.length; j++) {
+                            i == li[j]['index'] && tmp.push(li[j].getElementsByTagName('img')[0].src.match(/(\d+)\./)[1])
+                        }
+                    }
+                    for (var i = 0; i < tmp.length; i++) {
+                        if (i != tmp[i-1]) {
+                            success = false
+                            break
+                        }
+                    }
+                    return success
+                }
+            }
+
+            //test the touch
+            function isButt (obj1, obj2) {
+                var l1 = obj1.offsetLeft
+                var t1 = obj1.offsetTop
+                var r1 = obj1.offsetLeft + obj1.offsetWidth
+                var b1 = obj1.offsetTop + obj1.offsetHeight
+
+                var l2 = obj2.offsetLeft
+                var t2 = obj2.offsetTop
+                var r2 = obj2.offsetLeft + obj2.offsetWidth
+                var b2 = obj2.offsetTop + obj2.offsetHeight
+
+                return !(r1 < l2 || b1 < t2 || r2 < l1 || b2 < t1)
+            }
+
+            //get the distance of two point
+            function getDistance (obj1, obj2) {
+                var a = (obj1.offsetLeft + obj1.offsetWidth / 2) - (obj2.offsetLeft + obj2.offsetWidth / 2)
+                var b = (obj1.offsetTop + obj1.offsetHeight / 2) - (obj2.offsetTop + obj2.offsetHeight / 2)
+                return Math.sqrt(a * a + b * b)
+            }
+
+            //get the final layout
+            function getStyle(obj, attr) {
+                return parseFloat(obj.current ? obj.currentStyle[attr] : getComputedStyle(obj, null)[attr])
+            }
+
+            //move frame
+            function startMove(obj, pos, fn) {
+                clearInterval(obj.timer)
+                obj.timer = setInterval(function () {
+                    doMove(obj, pos, fn)
+                }, 30)
+            }
+            function doMove(obj, pos, fn) {
+                var curL = getStyle(obj, 'left')
+                var curT = getStyle(obj, 'top')
+                var speedL = (pos.left - curL) / 5
+                var speedT = (pos.top - curT) / 5
+                speedL = speedL >0 ? Math.ceil(speedL) : Math.floor(speedL)
+                speedT = speedT >0 ? Math.ceil(speedT) : Math.floor(speedT)
+                if (pos.left == curL && pos.top == curT) {
+                    clearInterval(obj.timer)
+                }
+                else {
+                    obj.style.left = curL + speedL + 'px'
+                    obj.style.top = curT + speedT +'px'
+                }
+            }
+
+        </script>
+    </head>
+    <body>
+        <div id="avatar">
+            <img src="g1/girl.jpg" class="selected">
+        </div>
+        <center>
+            <button type="button" >开始游戏</button>
+        </center>
+        <ul id='content'>
+        </ul>
+    </body>
+</html>

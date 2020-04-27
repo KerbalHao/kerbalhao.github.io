@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <style media="screen">
+      html, body, div,form, p, ul, li, h3, span{
+        margin: 0;
+        padding: 0;
+      }
+      ul{
+        list-style-type: none;
+      }
+      body{
+        background: #3c3a3b;
+        color: #333
+      }
+      #container {
+        width: 500px;
+        margin:10px auto;
+        background: white;
+        border-radius: 5px;
+        border: 1px solid #3c3a3b;
+        padding: 10px;
+      }
+      #container form p{
+        margin: 10px;
+      }
+      #container form input{
+        float: left;
+        height: 28px;
+        width: 315px;
+        border-radius: 5px;
+        border: 1px solid black;
+        margin-right:10px;
+        margin-bottom: 10px;
+      }
+      #container form p img{
+        width:32px;
+        margin-right: 6px;
+        height: 32px;
+        float:left;
+        cursor: pointer;
+        opacity: 0.5;
+
+      }
+      #container form p img:hover,
+      #container form p img.current{
+        width:30px;
+        height: 30px;
+        border: 1px solid red;
+        opacity: 1;
+      }
+      #container form textarea{
+        margin-top: 10px;
+        margin-right: 0;
+        width: 96%;
+        border: 1px solid black;
+        border-radius: 5px;
+        display: block;
+      }
+      #container form #footer{
+        text-align: right;
+      }
+      #container form #footer button{
+        background: url(btn.png) no-repeat;
+        width: 115px;
+        height: 31px;
+        border-radius:5px;
+        cursor:pointer;
+      }
+      #container form #footer button:hover{
+        background-position:0 -31px;
+      }
+      #container #list h3{
+        border: 1px solid  #dee4e7;
+        background: #e3eaec;
+        padding-top: 5px;
+      }
+      #container #list h3 span{
+        background: white;
+        margin-left: 10px;
+        padding: 5px;
+        font-size: medium;
+        font-weight: lighter;
+      }
+      #container #list ul{
+        margin-left: 10px;
+        overflow: hidden;
+      }
+      #container #list ul li {
+        border-bottom: 1px dashed #d8d8d8;
+        padding: 10px 10px 10px 0;
+        width: 100%;
+        float: left;
+        clear: both;
+        overflow: hidden;
+
+      }
+      #container #list ul li:hover{
+        background: #f5f5f5;
+      }
+      #container #list ul li div.userAvatar{
+        margin-right: 10px;
+        display: inline;
+        width: 50px;
+        padding: 0;
+        height: 100%;
+        float: left;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+      }
+      #container #list ul .userAvatar img{
+        width: 50px;
+        height: 50px;
+      }
+      #list ul li .name{
+        color: #2b4a78;
+        text-decoration: none;
+      }
+      #list ul li .name:hover{
+        text-decoration: underline;
+      }
+      #list ul li .content{
+          display: block;
+          word-wrap: break-word;
+          margin-left: 52px;
+        }
+      #list ul li p{
+        color: #889db6;
+        font: 12px/18px arial;
+        margin-top: 5px;
+        overflow: hidden;
+      }
+      #list ul li .time{
+        float: left;
+      }
+      #list ul li .dele{
+        text-decoration: none;
+        display: none;
+        float: right;
+        color: #889db6;
+      }
+    </style>
+    <script type="text/javascript">
+      window.onload = function () {
+        var spoilor = document.getElementsByTagName('input')[0]
+        var words = document.getElementsByTagName('textarea')[0]
+        var submit = document.getElementsByTagName('button')[0]
+        var gallery = document.getElementById('gallery')
+        var avas = gallery.getElementsByTagName('img')
+        var ul = document.getElementsByTagName('ul')[0]
+        var list = document.getElementsByTagName('li')
+        var dele = document.getElementsByClassName('dele')
+        var footer = document.getElementById('footer')
+        var infoMsg = footer.getElementsByTagName('span')[0]
+        var infon = footer.getElementsByTagName('strong')[0]
+        var limit
+        //setthe event of textarea about the left words
+        words.onkeyup = function () {
+          var length = words.value.length;
+          var leave = 140 - parseInt(length)
+          if (leave >= 0) {
+            infoMsg.innerText = '还能输入 '
+            infon.style.color = 'black'
+            infon.innerText = leave
+          } else {
+            infon.innerText = -leave
+            infoMsg.innerText = '已超出'
+            infon.style.color = 'red'
+          }
+        }
+        //设置发言人头像
+        for (var i = 0; i < avas.length; i++) {
+          avas[i].onclick = function () {
+            for (var j = 0; j < avas.length; j++) {
+              avas[j].className = ''
+            }
+            this.className = 'current'
+          }
+        }
+        //点击广播按钮，验证表单内容
+        submit.onclick = function () {
+          var ava = document.getElementsByClassName('current')[0]
+          if (spoilor.value == '') {
+            alert('请输入您的昵称')
+            return
+          } else if (words.value == '') {
+            alert('随便说点什么吧')
+            return
+          } else if (words.value.length > 140){
+            alert('超出字数限制')
+            return
+          }
+          // alert(ava.src)
+          append(spoilor.value, words.value, ava)
+          infon.innerText = 140
+          spoilor.value = ''
+          words.value = ''
+        }
+
+        // function of list's content
+        function append(name, content, ava) {
+          var li = document.createElement('li')
+          var time = new Date()
+          var now = `${time.getFullYear()}年${time.getMonth()+1}月${time.getDate()}日${time.getHours()}:${time.getMinutes()}`
+          li.innerHTML = `
+          <div class="userAvatar">
+              <img src="${ava.src}"  />
+            </div>
+            <a class='name' href="#javascript:;">${name}</a>:
+            <span class='content'>${content}</span>
+            <p><span class='time'>${now}</span><a href="javascript:;" class='dele'>删除</a></p>
+            `
+          ul.appendChild(li)
+          //set the event when mouseover the list and show the delete link etc
+          for (var i = 0; i < list.length; i++) {
+            list[i].index = i
+            dele[i].index = i
+            list[i]. onmouseover = function () {
+              dele[this.index].style.display = 'block'
+            }
+            list[i]. onmouseout = function () {
+              dele[this.index].style.display = 'none'
+            }
+            dele[i].onclick = function () {
+              ul.removeChild(list[this.index])
+            }
+          }
+        }
+
+        //set the event when mouseover the list and show the delete link etc
+        for (var i = 0; i < list.length; i++) {
+          list[i].index = i
+          dele[i].index = i
+          list[i]. onmouseover = function () {
+            dele[this.index].style.display = 'block'
+          }
+          list[i]. onmouseout = function () {
+            dele[this.index].style.display = 'none'
+          }
+          dele[i].onclick = function () {
+            ul.removeChild(list[this.index])
+          }
+        }
+
+      }
+    </script>
+  </head>
+  <body>
+    <div id="container">
+      <form >
+        <p>来说说你在做什么，想什么</p>
+        <input type="text" name="name" placeholder="请输入您的昵称">
+        <p id='gallery'>
+          <img src="1.jpg" class='current'>
+          <img src="2.jpg">
+          <img src="3.jpg">
+          <img src="4.jpg">
+        </p>
+        <textarea name="name" rows="5" cols="28"></textarea>
+        <p id='footer'>
+          <span id='limit'>还能输入</span>
+          <strong>140</strong>
+          <span>个字</span>
+          <button type="button" name="button" title='快捷键 Ctrl+Enter'></button>
+        </p>
+      </form>
+      <div id="list">
+        <h3><span>大家在说</span></h3>
+        <ul>
+          <li>
+            <div class="userAvatar">
+              <img src="1.jpg"  />
+            </div>
+            <a class='name' href="#javascript:;">name</a>:
+            <span class='content'>content</span>
+            <p><span class='time'>time</span><a href="javascript:;" class='dele'>删除</a></p>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </body>
+</html>

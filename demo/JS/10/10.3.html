@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>图片墙</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        .box {
+            width: 80%;
+            margin: 10px auto;
+            background: #eee;
+            border: 1px solid #b8b8b8;
+            overflow: hidden;
+        }
+        .title {
+            height: 30px;
+            line-height: 30px;
+            font-size: 14px;
+            padding: 0 15px 0 35px;
+            border-bottom: 1px solid #b8b8b8;
+            background: #fafafa url(img/ico.gif) 5px 50% no-repeat;
+        }
+        .title span {
+            float: left;
+        }
+        .title a {
+            float: right;
+            color: #06f;
+            outline: none;
+        }
+        .title a:hover {
+            color: red;
+        }
+        .box ul {
+            float: left;
+            padding: 0 15px 15px 0;
+        }
+        .box li {
+            width: 40px;
+            height: 105px;
+            padding: 6px;
+            background: white;
+            border: 1px solid #c3c3c3;
+            display: inline-block;
+            margin: 15px 0 0 15px;
+            list-style: none;
+        }
+        .box li img {
+            float: left;
+            width: 140px;
+            height: 105px;
+        }
+        .box li.hig {
+            padding: 5px;
+            border: 2px dashed #f30;
+            opacity: 0.5;
+            filter: alpha(opacity=50);
+        }
+    </style>
+    <script type="text/javascript">
+        // get element by id
+        var getById = function(id) {
+            return typeof id == 'string' ? document.getElementById(id) : id
+        }
+
+        //get element by tagName 
+        var getByTN = function(tagName, parent) {
+            return (parent || document).getElementsByTagName(tagName)
+        }
+
+        //get element by className
+        var getByCN = function(sClass, parent) {
+            var aClass = [], i = 0, 
+            reClass = new RegExp('(\\s|^)' + sClass + '($|\\s)'),
+            aElement = getByTN('*', parent)
+            for (i = 0; i < aElement.length; i++) {
+                reClass.test(aElement[i].className) && aClass.push(aElement[i])
+            }
+            return aClass
+        }
+
+        // get the position of element in the viewPort
+        function getPos(obj) {
+            var top = obj.offsetTop
+            var left = obj.offsetLeft
+            while (obj.offsetParent) {
+                top += obj.offsetParent.offsetTop
+                left += obj.offsetParent.offsetLeft
+                obj = obj.offsetParent
+            }
+            return {'top': top, 'left': left}
+        }
+
+        //create the wall of photoes obj
+        var PhotoWall = function () {
+            this.initialize.apply(this, arguments)
+        }
+
+        //set the prototype of obj photowall
+        PhotoWall.prototype = {
+            initialize: function(obj, data) {
+                var that = this
+                this.parent = getById(obj)
+                this.ul = getByTN('ul', this.parent)[0]
+                this.btn = getByTN('a', this.parent)[0]
+                this.zIndex = 1
+                this.pos = []
+                this.data = data
+                this.dom = document.documentElement || document.body
+                this.create()
+                this.btn.onclick = function() {
+                    that.randomOrder()
+                }
+            },
+            //create the img and call the function to change the layout
+            create: function() {
+                var frag = document.createDocumentFragment()
+                var i = 0
+                for (i = 0; i < this.data.length; i++) {
+                    var li = document.createElement('li')
+                    var img = document.createElement('img')
+                    img.src = this.data[i]
+                    li.appendChild(img)
+                    frag.appendChild(li)
+                }
+                this.ul.appendChild(frag)
+                this.li = getByTN('li', this.parent)
+                this.changeLayout()
+            },
+            //the function that change the layout and call the function drag 
+            changeLayout: function() {
+                var i = 0
+                console.log(this.parent)
+                this.parent.style.height = this.parent.offsetHeight - 2 + 'px'
+                this.pos.length = 0
+                for (i = 0; i < this.li.length; i++) {
+                    this.li[i].style.cssText = ''
+                }
+                for (i = 0; i < this.li.length; i++) {
+                    this.li[i].index = i
+                    this.li[i].style.top = getPos(this.li[i]).top + 'px'
+                    this.li[i].style.left = getPos(this.li[i]).left + 'px'
+                    this.pos.push({left: getPos(this.li[i]).left, top: getPos(this.li[i]).top})
+                }
+                for (i = 0; i < this.li.length; i++) {
+                    this.li[i].style.position = 'absolute'
+                    this.li[i].style.margin = '0'
+                    this.drag(this.li[i])
+                }
+            },
+
+            //function drag
+            drag: function(obj, handle) {
+                var that = this
+                var handle = handle || obj
+                handle.style.cursor = 'move'
+                handle.onmousedown = function(event) {
+                    var event = event || window.event
+                    var disX = event.clientX - this.offsetLeft
+                    var disY = event. clientY - this.offsetTop
+                    var near = null
+                    handle.style.zIndex = that.zIndex++
+
+                    document.onmousemove = function(event) {
+                        var event = event || window.event
+                        left = event.clientX - disX
+                        top = event.clicntY - disY
+                        var maxL = Math.max(that.dom.clientWidth, that.dom.scrollWidth) - handle.offsetWidth
+                        var maxT = Math.max(that.dom.clientHeigth, that.dom.scrollHeigth) - handle.offsetHeigth
+
+                        left < 0 && (left = 0)
+                        left > maxL && (left = maxL)
+                        top < 0 && (top = 0)
+                        top > maxT && (top = maxT)
+
+                        handle.style.left = left + 'px'
+                        handle.style.top = top + 'px'
+
+                        near = that.findNearest(obj)
+
+                        for (var i = 0; i < that.li.length; i++) {
+                            that.li[i].className = ''
+                        }
+
+                        near && (near.className - 'hig')
+
+                        return false
+                    }
+
+                    document.onmouseup = function() {
+                        document.onmousemove = null
+                        document.onmouseup = null
+
+                        if (near) {
+                            handle.index = [handle,index, near.index]
+                            near.index = handle.index[0]
+                            handle.index = handle.index[1]
+                            near.style.zIndex = that.zIndex ++
+
+                            that.doMove(handle, that.pos[handle.index])
+
+                            that.doMove(near, that.pos[near.index])
+                            near.className - ''
+                        } else {
+                            that.doMOve(handle, that.pos[handle.index])
+                        }
+                        handle.releaseCapture && handle.releaseCapture()
+                    }
+                    this.setCapture && this.setCapture()
+                    return false
+                }   
+            },
+
+            doMove: function(obj, target, callback) {
+                    var that = this
+                    clearInterval(obj.timer)
+                    obj.timer = setInterval(function() {
+                        var curL = getPos(obj).left
+                        var curT = getPos(obj).top
+                        var speedL = (target.left - curL) / 5
+                        var speedT = (target.top - curT) / 5
+                        speedL = speedL > 0 ? Math.ceil(speedL) : Math.floor(speedL)
+                        speedT = speedT > 0 ? Math.ceil(speedT) : Math.floor(speedT)
+
+                        if (curL == target.left && curT == target.top) {
+                            clearInterval(obj.timer)
+                            if (callback) {
+                                callback()
+                            }
+                        } else {
+                            obj.style.left = curL + speedL + 'px'
+                            obj.style.top = curL + speedL + 'px'
+                        }
+                    }, 30)
+            },
+
+            findNearest: function(obj) {
+                var distance = []
+                var i = 0
+                for (i = 0; i < this.li.length; i++) {
+                    distance[i] = this.li[i] == obj ? Number.MAX_VALUE : this.getDistance(obj, this.li[i])
+
+                    var minNum = Number.MAX_VALUE
+                    var minIndex = -1
+                    for (i = 0; i < distance.length; i++) {
+                        distance[i] < minNum && (minNum = distance[i], minIndex = i)
+
+                        return this.isConfilict(obj, this.li[minIndex]) ? this.li[mainIndex] : null
+                    }
+                }
+            },
+
+            //get the distance using the Pyrhagorean theorem
+            getDistance: function(obj1, obj2) {
+                var a = (obj1.offsetLeft + obj1.offsetWidth / 2) - (obj2.offsetLeft + obj2.offsetWidth / 2)
+                var b = (obj1.offsetTop + obj1.offsetHeight / 2) - (obj2.offsetTop + obj2.offsetHeight / 2)
+                return Math.sqrt(a * a + b * b )
+            },
+
+            isConfilict: function(obj1, obj2) {
+                var l1 = obj1.offsetLeft
+                var t1 = obj1.offsetTop
+                var r1 = l1 + obj.offsetWidth
+                var b1 = t1 + obj.offsetHeight
+
+                var l2 = obj2.offsetLeft
+                var t2 = obj2.offsetTop
+                var r2 = l2 + obj.offsetWidth
+                var b2 = t2 + obj.offsetHeight
+
+                return !(r1 < l2 || b1 < t2 || r2 < l1 || b2 < t1)
+            },
+
+            randomOrder: function() {
+                this.pos.sort(function() {
+                    return Math.random() > 0.5 ? 1 : -1
+                })
+                for (var i = 0; i < this.li.length; i++) {
+                    this.li[i].index = i
+                    this.doMove(this.li[i], this.pos[i])
+                }
+            }
+        }
+
+        window.onload = function() {
+            var box = document.getElementsByClassName('box')
+            var data = []
+            var example = []
+            var i = 0
+
+            for (i = 1; i <= 20; i ++) {
+                data[data.length] = 'img/' + i + '.jpg'
+            }
+            for (i = 0; i < box.length; i ++) {
+                var aexample = new PhotoWall(box[i], data)
+                example.push(aexample)
+            }
+            this.onresize = function() {
+                for (var p in example) {
+                    example[p].changeLayout()
+                }
+            }
+            this.onresize()
+        }
+    </script>
+</head>
+<body>
+    <div class='box'>
+        <h2 class='title'><span>Dota2</span><a href="javascript:;" class='order'>随机排序</a></h2>
+        <ul></ul>
+    </div>
+    <div class='box'>
+        <h2 class='title'>
+            <span>Dota2</span>
+            <a href="javascript:;" class='order'>随机排序</a>
+        </h2>
+        <ul></ul>
+    </div>
+</body>
+</html>

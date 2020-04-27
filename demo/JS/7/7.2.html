@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>带Loading效果的图片切换</title>
+    <style media="screen">
+      body, div, ul ,li{
+        margin: 0;
+        padding: 0;
+      }
+      li{
+        list-style: none;
+      }
+      #big{
+        position: relative;
+        width: 800px;
+        height: auto !important;
+        height: 400px;
+        min-height: 400px;
+        margin: 20px auto;
+        text-alig: center;
+      }
+      #title{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background: black;
+        color: white;
+        opacity: 0.7;
+        height: 50px;
+      }
+      #title span{
+        padding: 0 5px;
+        line-height: 50px;
+        display: block;
+      }
+      #big.loading{
+        background: url(loading.gif)50% 50% no-repeat;
+      }
+      #masks_L, #masks_R{
+        position: absolute;
+        top: 0;
+        width: 400px;
+        height: 100%;
+        cursor: pointer;
+        background: #f0f0f0;
+        opacity: 0;
+      }
+      #masks_L{
+        left: 0;
+      }
+      #masks_R{
+        right: 0;
+      }
+      #btn_L, #btn_R{
+        position: absolute;
+        top:50%;
+        transform: translateY(-50%);
+        width: 39px;
+        height: 80px;
+        overflow: hidden;
+        cursor: pointer;
+        text-indent: -9999px;
+        background: url(btn.png) no-repeat;
+        /* opacity: 0; */
+      }
+      #btn_L{
+        left: 10px;
+        background-position: 0 0
+      }
+      #btn_R{
+        right: 10px;
+        background-position: -39px 0;
+      }
+    </style>
+    <script type="text/javascript">
+      window.onload = function () {
+        var big = document.getElementById('big')
+        var maskL = document.getElementById('masks_L')
+        var maskR = document.getElementById('masks_R')
+        var btnL = document.getElementById('btn_L')
+        var btnR = document.getElementById('btn_R')
+        var title = document.getElementById('title')
+        var span = title.getElementsByTagName('span')[0]
+        var now = 0;
+        var data = [{
+          imgSrc: '1.jpg',
+          title: '巫妖'
+        },
+        {
+          imgSrc: '2.jpg',
+          title: '卓尔游侠'
+        },
+        {
+          imgSrc: '3.jpg',
+          title: '烈焰之灵'
+        },
+        {
+          imgSrc: '4.jpg',
+          title: '末日使者'
+        }]
+        // setting the btns mouseover and mouseout events
+        maskL.onmouseover = btnL.onmouseover = function () {
+          startMove(btnL, 'opacity', 100)
+        }
+        maskL.onmouseout = btnL.onmouseout = function () {
+          startMove(btnL, 'opacity', 0)
+        }
+        maskR.onmouseover = btnR.onmouseover = function () {
+          startMove(btnR, 'opacity', 100)
+        }
+        maskR.onmouseout = btnR.onmouseout = function () {
+          startMove(btnR, 'opacity', 0)
+        }
+
+        // declare the function of interval timer which is make the img change
+        function startMove(obj, attr, target, fn) {
+          clearInterval(obj.timer)
+          obj.timer = setInterval(function () {
+            doMove(obj, attr, target, fn)
+          }, 30)
+        }
+
+        //declare the function to set the element changing type
+        function doMove(obj, attr, target, fn) {
+          //get the target style's value
+          var value = parseFloat(getComputedStyle(obj)[attr])
+          if (attr == 'opacity') {
+            value = parseInt(value * 100)
+          }
+
+          //set the animate change speed
+          var speed = (target - value) / 5
+          speed = speed > 0 ? Math.ceil(speed) : Math.floor(speed)
+
+          //set the condition to stop the interval
+          if(target == value) {
+            clearInterval(obj.timer)
+            if (fn) {
+              fn()
+            }
+          } else {
+            if (attr == 'opacity') {
+              obj.style.opacity = (value + speed) / 100
+            } else {
+              obj.style[attr] = value + speed + 'px'
+            }
+          }
+        }
+
+        //set the btn's click event
+        btnL.onclick = function () {
+          if (now <= 0) {
+            alert('前面没有图片了')
+            return
+          }
+          now--
+          loadImg()
+        }
+        btnR.onclick = function () {
+          if (now >= data.length - 1) {
+            alert('这是最后一张图片了')
+            return
+          }
+          now++
+          loadImg()
+        }
+
+        //initial function
+        loadImg()
+
+        // loading img
+        function loadImg () {
+          big.className = 'loading'
+          span.style.opacity = title.style.height = 0
+          var img = big.getElementsByTagName('img')
+          if (img[0]) {
+            big.removeChild(img[0])
+          }
+          var tmp = document.createElement('img')
+          var newImg = new Image()
+          newImg.src = data[now].imgSrc
+          newImg.onload = function () {
+            big.className = ''
+            tmp.src = this.src
+            big.appendChild(tmp)
+            tmp.style.width = (tmp.offsetWidth > 800 ? 800 : tmp.offsetWidth) + 'px'
+
+            big.style.height = tmp.style.height = tmp.offsetHeight * tmp.offsetWidth / tmp.offsetWidth + 'px'
+
+            span.innerHTML = data[now].title
+            startMove(title, 'height', 50, function () {
+              startMove(title.childNodes[0], 'opacity', 100)
+            })
+          }
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div id="big">
+      <div id="masks_L"></div>
+      <div id="masks_R"></div>
+      <div id="btn_L">左</div>
+      <div id="btn_R">右</div>
+      <div id="title"><span></span></div>
+    </div>
+  </body>
+</html>

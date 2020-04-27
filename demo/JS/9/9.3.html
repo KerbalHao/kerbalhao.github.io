@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title>表单控件</title>
+        <style media="screen">
+            /* ----表单控件CSS开始---- ↓ */
+            .WellForm *{margin:0;padding:0;}
+            .WellForm{font-size:12px;font-family:arial;line-height:21px;}
+            .WellForm pre{float:left;margin-right:10px;}
+            /*background*/
+            .WellForm .TextL,.WellForm .TextR,.WellForm .WellText,
+            .WellForm .SelectL,.WellForm .SelectR,.WellForm .WellSelect,
+            .WellForm .WellTextArea .T,
+            .WellForm .WellTextArea .T .TL,
+            .WellForm .WellTextArea .T .TM,
+            .WellForm .WellTextArea .B,
+            .WellForm .WellTextArea .B .BL,
+            .WellForm .WellTextArea .B .BM,
+            .WellForm .WellRadio,
+            .WellForm .WellCheckBox,
+            .WellForm .ButtonL,.WellForm .ButtonR,.WellForm .WellButton
+            {background:url(WellForm.gif) no-repeat;}
+            /*WellText*/
+            .WellForm .TextL,.WellForm .TextR,.WellForm .WellText{float:left;width:5px;height:21px;}
+            .WellForm .TextL{background-position:0 0;}.WellForm .TextR{background-position:right 0;}
+            .WellForm .TextLH{background-position:0 -21px;}.WellForm .TextRH{background-position:right -21px;}
+            .WellForm .WellText{border:0;width:auto;height:17px;padding:2px 0;padding:3px 0 1px\9;*padding:3px 0 1px;font-family:arial;background-repeat:repeat-x;background-position:0 -42px;}
+            .WellForm .WellTextH{background-position:0 -63px;}
+            /*WellSelect*/
+            .WellForm .SelectL,.WellForm .SelectR,.WellForm .WellSelect{float:left;height:21px;}
+            .WellForm .SelectL{width:3px;background-position:0 -84px;}
+            .WellForm .SelectR{width:16px;cursor:pointer;background-position:right -84px;margin-right:5px;}
+            .WellForm .WellSelect{position:relative;cursor:pointer;background-repeat:repeat-x;background-position:0 -105px;}
+            .WellForm .WellSelect select{display:none;}
+            .WellForm .WellSelect em{position:absolute;top:0;left:3px;color:#fff;height:21px;display:block;line-height:21px;font-style:normal;}
+            .WellForm .WellSelect ul{list-style-type:none;position:absolute;top:18px;left:0;z-index:1000;display:none;background:#6C6D70;}
+            .WellForm .WellSelect ul li {color:#fff;height:20px;cursor:pointer;line-height:20px;padding-left:3px;}
+            .WellForm .WellSelect ul li.hover{background:#333;}
+            /*WellTextArea*/
+            .WellForm .WellTextArea{float:left;}
+            .WellForm .WellTextArea .T,
+            .WellForm .WellTextArea .T .TL,
+            .WellForm .WellTextArea .T .TM,
+            .WellForm .WellTextArea .B,
+            .WellForm .WellTextArea .B .BL,
+            .WellForm .WellTextArea .B .BM
+            {height:5px;overflow:hidden;}
+            .WellForm .WellTextArea .T{float:left;width:100%;background-position:right -126px;}
+            .WellForm .WellTextArea .TH{float:left;width:100%;background-position:right -131px;}
+            .WellForm .WellTextArea .T .TL{background-position:0 -126px;}
+            .WellForm .WellTextArea .TH .TL{background-position:0 -131px;}
+            .WellForm .WellTextArea .T .TM{margin:0 5px;background-repeat:repeat-x;background-position:0 -136px;}
+            .WellForm .WellTextArea .TH .TM{margin:0 5px;background-repeat:repeat-x;background-position:0 -141px;}
+            .WellForm .WellTextArea .B{float:left;width:100%;background-position:right -146px;}
+            .WellForm .WellTextArea .BH{float:left;width:100%;background-position:right -151px;}
+            .WellForm .WellTextArea .B .BL{background-position:0 -146px;}
+            .WellForm .WellTextArea .BH .BL{background-position:0 -151px;}
+            .WellForm .WellTextArea .B .BM{margin:0 5px;background-repeat:repeat-x;background-position:0 -156px;}
+            .WellForm .WellTextArea .BH .BM{margin:0 5px;background-repeat:repeat-x;background-position:0 -161px;}
+            .WellForm .WellTextArea .M,
+            .WellForm .WellTextArea .M .MR
+            {float:left;background:url(TextArea-1.gif) repeat-y;}
+            .WellForm .WellTextArea .M{background-position:0 0;}
+            .WellForm .WellTextArea .M .MR{background-position:right 0;}
+            .WellForm .WellTextArea .MH,
+            .WellForm .WellTextArea .MH .MR
+            {float:left;background:url(TextArea-2.gif) repeat-y;}
+            .WellForm .WellTextArea .MH{background-position:0 0;}
+            .WellForm .WellTextArea .MH .MR{background-position:right 0;}
+            .WellForm .WellTextArea textarea{float:left;border:0;margin:0 5px;overflow:auto;background:url(TextArea.gif);font-family:arial;font-size:12px;resize:none;}
+            /*WellRadio*/
+            .WellForm .WellRadio{float:left;width:13px;height:13px;cursor:pointer;overflow:hidden;margin:4px 5px 0 0;background-position:-15px -270px;}
+            .WellForm .WellRadioH{background-position:-15px -284px;}
+            .WellForm .WellRadio input{margin-top:13px;display:none;}
+            /*WellCheckBox*/
+            .WellForm .WellCheckBox{float:left;	width:12px;height:12px;cursor:pointer;overflow:hidden;margin:4px 5px 0 0;background-position:0 -270px;}
+            .WellForm .WellCheckBoxH{background-position:0 -283px;}
+            .WellForm .WellCheckBox input{margin-top:12px;display:none;}
+            /*WellButton*/
+            .WellForm .ButtonL,.WellForm .ButtonR,.WellForm .WellButton{cursor:pointer;float:left;width:5px;height:26px;}
+            .WellForm .ButtonL{background-position:0 -166px;}.WellForm .ButtonR{background-position:right -166px;margin-right:10px;}
+            .WellForm .ButtonLH{background-position:0 -192px;}.WellForm .ButtonRH{background-position:right -192px;}
+            .WellForm .WellButton{border:0;width:auto;font-size:12px;color:#fff!important;height:26px;padding:0 10px 3px;*padding-bottom:0;padding-bottom:0\9;font-family:arial;background-repeat:repeat-x;background-position:0 -218px;}
+            .WellForm .WellButtonH{background-position:0 -244px;}
+            /* ----表单控件CSS结束---- ↑ */
+
+            form{float:left;padding:20px;border:2px dashed #ccc;margin:20px 0 0 40px;width:380px;}
+            form .item{float:left;clear:both;width:100%;margin-bottom:10px;}
+            .WellForm label{float:left;width:4em;height:21px;text-align:right;}
+        </style>
+        <script type="text/javascript">
+            //dyminically render the form
+            window.onload = function () {
+                var form = document.getElementsByTagName('form')
+                for (var i = 0; i < form.length; i++) {
+                    wellForm(form[i])
+                }
+            }
+
+            //declare the function to get the target class
+            function getClass (sclass, parent) {
+                var aClass = []
+                var reClass = new RegExp('(^| )' + sClass + '( |$)')
+                var elem = (parentElement || document).getElementsByTagName('*')
+                for (var i = 0; i < elem.length; i++) {
+                    reClass.test(elem[i].className) && aClass.push(elem[i])
+                }
+                return aClass
+            }
+
+            //estimate the obj's className
+            function hasClass (obj, sClass) {
+                var reg = new RegExp('(^|\\s)' + sClass + '(\\s|$)')
+                return reg.test(obj.className)
+            }
+
+            function addClass (obj, sClass) {
+                hasClass(obj, sClass) || (obj.className += ' ' + sClass)
+            }
+
+            function removeClass (obj, sClass) {
+                if (hasClass(obj, sClass)) {
+                    var reg = new RegExp('(^|\\s)' + sClass + '(\\s|$)')
+                    obj.className = obj.className.replace(reg, '')
+                }
+            }
+
+            function prevElement (obj) {
+                return obj.previousSibling || obj.previousElementSibling || null
+            }
+
+            function nextElement (obj) {
+                return obj.nextSibling || obj.nextElementSibling || null
+            }
+
+            //main function
+            function wellForm (form) {
+                var i = 0
+                var zIndex = 1
+                var input = form.getElementsByTagName('input')
+                var select = form.getElementsByTagName('select')
+                var textArea = form.getElementsByTagName('textarea')
+                form.className = 'WellForm'
+
+                //define the text input
+                var text = []
+                for (var i = 0; i < input.length; i++) {
+                    (input[i]['type'] == 'text' || input[i]['type'] == 'password') && text.push(input[i])
+                }
+                //define the text input's style and event
+                for (var i = 0; i < text.length; i++) {
+                    var textR = document.createElement('div')
+                    var textL = document.createElement('div')
+                    textL.className = 'TextL'
+                    textR.className = 'TextR'
+                    text[i].className = 'WellText'
+                    text[i].parentNode.insertBefore(textL, text[i])
+                    text[i].parentNode.insertBefore(textR, nextElement(text[i]))
+
+                    text[i].onfocus = function () {
+                        addClass(this, 'WellTextH')
+                        addClass(prevElement(this), 'TextLH')
+                        addClass(nextElement(this), 'TextRH')
+                    }
+
+                    text[i].onblur = function () {
+                        removeClass(this, 'WellTextH')
+                        removeClass(prevElement(this), "TextLH");
+			            removeClass(nextElement(this), "TextRH")
+                    }
+                }
+
+                //defint the textarea's style and events
+                for (var i = 0; i < textArea.length; i++) {
+                    var oTextArea = document.createElement('div')
+                    oTextArea.className = 'WellTextArea'
+
+                    var top = document.createElement('div')
+                    var topL = document.createElement('div')
+                    var topM = document.createElement('div')
+                    top.className = 'T'
+                    topL.className = 'TL'
+                    topM.className = 'TM'
+                    topL.appendChild(topM)
+                    top.appendChild(topL)
+
+                    var middle = document.createElement("div");
+            		var middleR = document.createElement("div");
+            		middle.className = "M";
+            		middleR.className = "MR";
+            		middle.appendChild(middleR);
+
+                    var bottom = document.createElement("div");
+            		var bottomL = document.createElement("div");
+            		var bottomM = document.createElement("div");
+            		bottom.className = "B";
+            		bottomL.className = "BL";
+            		bottomM.className = "BM";
+            		bottomL.appendChild(bottomM);
+            		bottom.appendChild(bottomL);
+
+                    textArea[i].parentNode.insertBefore(oTextArea, textArea[i])
+                    middleR.appendChild(textArea[i])
+                    oTextArea.appendChild(top)
+                    oTextArea.appendChild(middle)
+                    oTextArea.appendChild(bottom)
+                    oTextArea.style.width = middleR.offsetWidth + 'px'
+
+                    textArea[i].onfocus = function () {
+                        var m = this.parentNode.parentNode
+                        addClass(m, 'MH')
+                        addClass(prevElement(m), 'TH')
+                        addClass(nextElement(m), 'BH')
+                    }
+
+                    textArea[i].onblur = function () {
+                            var m = this.parentNode.parentNode
+                        removeClass(m, 'MH')
+                        removeClass(prevElement(m), 'TH')
+                        removeClass(nextElement(m), 'BH')
+                    }
+                }
+
+                //define the radio's style and events
+                var radio = []
+                for (var i = 0; i < input.length; i++) {
+                    input[i]['type'] == 'radio' && radio.push(input[i])
+                }
+
+                for (var i = 0; i < radio.length; i++) {
+                    var oRadio = document.createElement('div')
+                    oRadio.className = 'WellRadio'
+
+                    radio[i].parentNode.insertBefore(oRadio, radio[i])
+                    oRadio.appendChild(radio[i])
+
+                    radio[i].checked && addClass(radio[i].parentNode, 'WellRadio')
+
+                    oRadio.onclick = function () {
+                        var siblings = getClass('WellRadio', this.parentNode)
+                        for (var i = 0; i < siblings.length; i++) {
+                            removeClass(siblings[i], 'WellRadioH')
+                            siblings[i].children[0].checked = false
+                        }
+                        addClass(this, 'WellRadioH')
+                        this.children[0].checked = true
+                    }
+                }
+
+                //define the checkbox's style and events
+                var checkBox = []
+                for (var i = 0; i < input.length; i++) {
+                    input[i]['type'] == 'checkbox' && checkBox.push(input[i])
+                }
+
+                for (var i = 0; i < checkBox.length; i++) {
+                    var oCheckBox = document.createElement('div')
+                    oCheckBox.className = 'WellCheckBox'
+
+                    checkBox[i].parentNode.insertBefore(oCheckBox, checkBox[i])
+                    oCheckBox.appendChild(checkBox[i])
+
+                    checkBox[i].checked && addClass(checkBox[i].parentNode, 'WellCheckBoxH')
+
+                    oCheckBox.onclick = function () {
+                        this.children[0].checked = !this.children[0].checked
+                        this.children[0].checked ? addClass(this, 'WellCheckBoxH') : removeClass(this, 'WellCheckBoxH')
+                    }
+                }
+                //define the button's style and events
+                var button = []
+                for (var i = 0; i < input.length; i++) {
+                    input[i]['type'] == 'button' || input[i]['type'] == 'submit' && button.push(input[i])
+                }
+
+                for (var i = 0; i < button.length; i++) {
+                    var btnL = document.createElement('div')
+                    var btnR = document.createElement('div')
+                    btnL.className = 'ButtonL'
+                    btnR.className = 'ButtonR'
+                    button[i].className = 'WellButton'
+                    button[i].parentNode.insertBefore(btnL, button[i])
+                    button[i].parentNode.insertBefore(btnR, nextElement(button[i]))
+
+                    button[i].onmouseover = function () {
+                        addClass(this, "WellButtonH");
+            			addClass(prevElement(this), "ButtonLH");
+            			addClass(nextElement(this), "ButtonRH");
+                    }
+
+                    button[i].onmouseout = function () {
+                        removeClass(this, "WellButtonH");
+            			removeClass(prevElement(this), "ButtonLH");
+            			removeClass(nextElement(this), "ButtonRH");
+                    }
+                }
+
+                //define the select's events and style
+                for (var i = 0; i < select.length; i++) {
+                    var fragment = document.createDocumentFragment()
+                    var selectL = document.createElement('div')
+                    var selectR = document.createElement('div')
+                    var WellSelect = document.createElement('div')
+                    var em = document.createElement('em')
+                    var ul = document.createElement('ul')
+                    selectL.className = 'SelectL'
+                    selectR.className = 'SelectR'
+                    WellSelect.className = 'WellSelect'
+
+                    select[i].parentNode.insertBefore(selectL, select[i])
+                    select[i].parentNode.insertBefore(selectR, nextElement(select[i]))
+                    ul.style.width = WellSelect.style.width = select[i].offsetWidth - selectR.offsetWidth / 2 + 'px'
+
+                    for (var j = 0; j < select[i].options.length; j++) {
+                        var li = document.createElement('li')
+                        li.innerHTML = select[i].options[j].text
+                        li['sValue'] = select[i].options[j].value
+                        fragment.appendChild(li)
+                        select[i].options[j].selected && (em.innerHTML = select[i].options[j].text)
+                    }
+                    ul.appendChild(fragment)
+                    WellSelect.appendChild(em)
+                    WellSelect.appendChild(ul)
+                    select[i].parentNode.insertBefore(WellSelect, select[i])
+                    WellSelect.appendChild(select[i])
+
+                    WellSelect.onclick = select.onclick = function (event) {
+                        var o = this.getElementsByTagName('ul')[0] || prevElement(this).getElementsByTagName('ul')[0]
+                        var aul = form.getElementsByTagName('ul')
+                        this.parentNode.style.position = 'relative'
+                        this.parentNode.style.zIndex = zIndex++
+                        o.style.display = o.style.display == 'block' ? 'none' : 'block'
+                        for (var i = 0; i < aul.length; i++) {
+                            if (o == aul[i]) {
+                                continue
+                            }
+                            aul[i].style.display = 'none'
+                        }
+                        var ali = o.getElementsByTagName('li')
+
+                        for (var i = 0; i < ali.length; i++) {
+                            ali[i].onmouseover = function () {
+                                this.className = 'hover'
+                            }
+                            ali[i].onmouseout = function () {
+                                this.className = ''
+                            }
+                            ali[i].onclick = function () {
+                                prevElement(this.parentNode).innerHTML = this.innerHTML
+                                nextElement(this.parentNode).value = this.sValue
+                            }
+                        }
+                        (event || window.event).cancelBubble = true
+
+                        document.onclick = function () {
+                            o.style.display = 'none'
+                        }
+                    }
+                }
+            }
+        </script>
+    </head>
+    <body>
+        <form>
+            <div class="item"><label>姓名：</label><input type="text" name="name" /></div>
+            <div class="item"><label>电话：</label><input type="text" name="tel" /></div>
+            <div class="item">
+                <label>性别：</label>
+                <select name="sex">
+                    <option value="男孩">男孩</option>
+                    <option value="女孩" selected="selected">女孩</option>
+                </select>
+            </div>
+            <div class="item">
+                <label>生日：</label>
+                <select name="month">
+                    <option value="1">1月</option>
+                    <option value="2">2月</option>
+                    <option value="3">3月</option>
+                    <option value="4">4月</option>
+                    <option value="5">5月</option>
+                    <option value="6">6月</option>
+                    <option value="7" selected="selected">7月</option>
+                    <option value="8">8月</option>
+                    <option value="9">9月</option>
+                    <option value="10">10月</option>
+                    <option value="11">11月</option>
+                    <option value="12">12月</option>
+                </select>
+                <select name="day">
+                    <option value="1">1号</option>
+                    <option value="2">2号</option>
+                    <option value="3">3号</option>
+                    <option value="4">4号</option>
+                    <option value="5">5号</option>
+                    <option value="6" selected="selected">6号</option>
+                    <option value="7">7号</option>
+                    <option value="8">8号</option>
+                    <option value="9">9号</option>
+                    <option value="10">10号</option>
+                    <option value="11">11号</option>
+                    <option value="12">12号</option>
+                    <option value="13">13号</option>
+                    <option value="14">14号</option>
+                    <option value="15">15号</option>
+                    <option value="16">16号</option>
+                </select>
+                <select name="year">
+                    <option value="2000">2000年</option>
+                    <option value="2001">2001年</option>
+                    <option value="2002">2002年</option>
+                    <option value="2003">2003年</option>
+                    <option value="2004">2004年</option>
+                    <option value="2005">2005年</option>
+                    <option value="2006">2006年</option>
+                    <option value="2007">2007年</option>
+                    <option value="2008">2008年</option>
+                    <option value="2009">2009年</option>
+                    <option value="2010" selected="selected">2010年</option>
+                    <option value="2011">2011年</option>
+                    <option value="2012">2012年</option>
+                    <option value="2013">2013年</option>
+                </select>
+            </div>
+            <div class="item">
+                <label>婚姻：</label>
+                <input type="radio" name="marry" value="已婚" /><pre>已婚</pre>
+                <input type="radio" name="marry" value="未婚" checked="checked" /><pre>未婚</pre>
+            </div>
+            <div class="item">
+                <label>爱好：</label>
+                <input type="checkbox" name="like" value="吃饭" /><pre>吃饭</pre>
+                <input type="checkbox" name="like" value="睡觉" /><pre>睡觉</pre>
+                <input type="checkbox" name="like" value="上网" checked="checked" /><pre>上网</pre>
+                <input type="checkbox" name="like" value="打游戏" checked="checked" /><pre>打游戏</pre>
+            </div>
+            <div class="item"><label>地址：</label><input type="text" style="width:300px;" name="address" /></div>
+            <div class="item"><label>备注：</label><textarea cols="50" rows="5" style="width:300px;" name="remark"></textarea></div>
+            <div class="item"><label>说明：</label><textarea cols="50" rows="5" style="width:300px;" name="desc"></textarea></div>
+            <div class="item"><label></label><input type="submit" value="提交" /></div>
+        </form>
+        <form>
+        	<div class="item"><label>用户名：</label><input type="text" name="username" /></div>
+            <div class="item"><label>密码：</label><input type="password" name="pwd" /></div>
+            <div class="item"><label>验证码：</label><input type="text" name="code" style="width:60px;" /></div>
+            <div class="item"><label></label><input type="submit" value="提交" /></div>
+        </form>
+    </body>
+</html>

@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <style media="screen">
+            * {
+                margin: 0;
+                padding: 0;
+            }
+            ul {
+                list-style-type: none;
+            }
+            .top, .blank {
+                opacity: 0
+            }
+            #menu {
+                position: absolute;
+                width: 10%;
+                left: 10px;
+                top: 120px;
+                background: grey;
+                border: 3px solid #EEE;
+                border-radius: 20px;
+            }
+            #menu ul {
+                margin: 10px;
+                padding: 10px;
+            }
+            #menu ul li {
+                border: 1px solid white;
+                border-radius: 5px;
+                background: #9C0;
+                padding: 5px;
+                margin: 10px 0;
+                cursor: pointer;
+                color: white;
+                font-weight: bold;
+                text-align: center;
+            }
+            #menu ul li:hover {
+                background: #09F;
+            }
+            #menu ul.sub {
+                position: absolute;
+                display: none;
+                background: #7CF;
+                padding: 5px;
+                padding-top: 10px;
+                margin: 0;
+                border: 1px solid white;
+                border-radius: 5px;
+            }
+            #menu ul.sub li {
+                margin: 0 5px 10px 5px;
+                padding: 0;
+                width: 105px;
+                background: #7CF;
+                border: 1px solid white;
+            }
+            #menu ul.sub li:hover {
+                text-decoration: underline;
+                background: #09F;
+            }
+            #menu ul.sub li a {
+                font-weight: 400;
+            }
+            #menu ul li a{
+                color: white;
+                text-decoration: none;
+                text-align: center;
+            }
+            h1, h2 {
+                text-align: center;
+            }
+            iframe {
+                margin-left: 30%;
+                text-align: center
+            }
+            #menu ul.show {
+                display: block !important;
+            }
+            h2 {
+                margin-top: 10px;
+                white-space: pre
+            }
+            iframe {
+                float: right;
+                margin-right: 10%;
+            }
+        </style>
+        <script type="text/javascript">
+
+            window.onload = function () {
+                var timer = null
+                var menu = document.getElementById('menu')
+                var main = menu.getElementsByTagName('ul')[0]
+                var li = main.getElementsByTagName('li')
+                var sub = menu.getElementsByClassName('sub')
+                var iframe = document.getElementsByTagName('iframe')[0]
+                var h2 = document.getElementsByTagName('h2')[0]
+                for (var i = 0; i < li.length; i++) {
+                    li[i].index = i
+
+                     li[i].onmouseover = function (event) {
+                        var event = event || window.event
+                        sub[this.index].classList.add('show')
+                        var left = this.offsetLeft + this.offsetWidth
+                        var top = this.offsetTop
+                        sub[this.index].style.left = left + 'px'
+                        sub[this.index].style.top = top + 'px'
+                        sub[this.index].onmouseover = function () {
+                            clearTimeout(timer)
+                        }
+                        sub[this.index].onmouseout = function (){
+                            var a = this
+                            timer = setTimeout(function () {
+                                a.classList.remove('show')
+                            }, 30)
+                        }
+                    }
+                    li[i].onmouseout = function () {
+                        var a = this.index
+                        timer = setTimeout(function () {
+                            sub[a].classList.remove('show')
+                        }, 30)
+                    }
+                }
+
+                for (var i = 0; i < sub.length; i++) {
+                    var subA = sub[i].getElementsByTagName('a')
+                    for (var j = 0; j < subA.length; j++) {
+                        subA[j].onclick = function (event) {
+                            // event.cancelBubble = true
+                            event.preventDefault()
+                            document.body.removeChild(iframe)
+                            iframe = document.createElement('iframe')
+                            iframe.src = this.href
+                            iframe.width = '69%'
+                            iframe.height = '800px'
+                            document.body.appendChild(iframe)
+                            h2.innerText = this.innerText
+                        }
+                    }
+                }
+            }
+        </script>
+    </head>
+    <body>
+        <div class="top">
+            11
+        </div>
+        <div class="blank">
+            11
+        </div>
+        <div id="menu">
+            <ul>
+                <li>First</li>
+                <li>Second</li>
+                <li>Third</li>
+                <li>Four</li>
+                <li>Five</li>
+                <li>Six</li>
+            </ul>
+            <ul class='sub' id='first'>
+                  <li><a href="1/1.1.html">1.1 控制DIV属性</a></li>
+                  <li><a href="1/1.2.html">1.2 网页换肤</a></li>
+                  <li><a href="1/1.3.html">1.3 函数接收参数并弹出</a></li>
+                  <li><a href="1/1.4.html">1.4 使用for-loop将div变色</a></li>
+                  <li><a href="1/1.5.html">1.5 鼠标移入/移出改变样式</a></li>
+                  <li><a href="1/1.6.html">1.6 记住密码提示框</a></li>
+            </ul>
+            <ul class='sub' id='second'>
+                <li><a href="2/2.1.html">2.1 点击按钮 出现下拉选项</a></li>
+                <li><a href="2/2.2.html">2.2 点击显示inner.html</a></li>
+                <li><a href="2/2.3.html">2.3 输入数字求和</a></li>
+                <li><a href="2/2.4.html">2.4 弹窗</a></li>
+                <li><a href="2/2.5.html">2.5 函数传参，改变DIV的CSS值</a></li>
+                <li><a href="2/2.6.html">2.6 图片列表：鼠标移入/移出改变图片透明度</a></li>
+                <li><a href="2/2.7.html">2.7 选项卡</a></li>
+             <li><a href="2/2.8.html">2.8 简单年历</a></li>
+                <li><a href="2/2.9.html">2.9 点击按钮展示/隐藏列表</a></li>
+                <li><a href="2/2.10.html">2.10 提示框效果</a></li>
+                <li><a href="2/2.11.html">2.11 图片框</a></li>
+                <li><a href="2/2.12.html">2.12 复选框（checkbox）全选/全不选/返选</a></li>
+            </ul>
+            <ul class='sub'>
+                <li><a href="3/3.1.html">3.1 简单js效果</a></li>
+                <li><a href="3/3.2.html">3.2 网页电子时钟</a></li>
+                <li><a href="4/4.1.html">3.3 setTimeout应用</a></li>
+                <li><a href="4/4.2.html">3.4 自动播放一幻灯片效果</a></li>
+                <li><a href="4/4.3.html">3.5 css函数一设置/读取对象的属性</a></li>
+                <li><a href="4/4.4.html">3.6 星级评分系统</a></li>
+            </ul>
+            <ul class='sub'>
+                <li><a href="5/5.1.html">4.1 模拟select控件</a></li>
+                <li><a href="5/5.2.html">4.2 跟随鼠标移动（大图展示）</a></li>
+                <li><a href="5/5.3.html">4.3 自定义右键菜单</a></li>
+                <li><a href="5/5.4.html">4.4 用键盘控制Div</a></li>
+                <li><a href="5/5.5.html">4.5 Div闪烁</a></li>
+            </ul>
+            <ul class='sub'>
+                <li><a href="6/6.1.html">5.1 完美拖拽</a></li>
+                <li><a href="6/6.2.html">5.2 仿腾讯微博效果</a></li>
+                <li><a href="6/6.3.html">5.3 自定义多级右键菜单</a></li>
+                <li><a href="7/7.1.html">5.4 自动轮播广告（缓冲效果）</a></li>
+                <li><a href="7/7.2.html">5.5 图片切换（Loading效果）</a></li>
+                <li><a href="7/7.3.html">5.6 移动效果（按轨迹移动）</a></li>
+            </ul>
+            <ul class='sub'>
+                <li><a href="8/8.1.html">6.1 iPhone手机解锁效果</a></li>
+                <li><a href="8/8.2.html">6.2 自定义滚动条</a></li>
+                <li><a href="8/8.3.html">6.3 拖拽一Clone</a></li>
+                <li><a href="8/8.4.html">6.4 拖拽并可以改变大小</a></li>
+                <li><a href="9/9.1.html">6.5 仿苹果电脑任务栏菜单</a></li>
+            </ul>
+        </div>
+        <h1>原生JS练习：将鼠标移动到左边选择点击查看</h1>
+        <h2> </h2>
+        <iframe width="69%" ></iframe>
+    </body>
+</html>

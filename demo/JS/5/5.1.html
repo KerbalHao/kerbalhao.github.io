@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <style media="screen">
+      body, div, form, span, ul, li{
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        background: #23384e;
+        color:white;
+      }
+      ul {
+        list-style-type: none;
+      }
+      #search,#search form,#search .box,#search .select,#search a {
+        background: url(search.jpg) no-repeat
+      }
+      #search, #search form, #search .box{
+        height: 34px;
+      }
+      #search {
+        position:relative;
+        width: 350px;
+        margin: 10px auto;
+      }
+      #search .box {
+        background-position: right 0;
+      }
+      #search form {
+        background-repeat: repeat-x;
+        background-position: 0 -34px;
+        margin: 0 20px 0 40px
+      }
+      #search .select{
+        float: left;
+        width: 190px;
+        height: 22px;
+        cursor: pointer;
+        margin-top: 4px;
+        line-height: 22px;
+        padding-left: 10px;
+        background-position: 0 -68px;
+      }
+      #search a{
+        float:left;
+        width: 80px;
+        height: 24px;
+        color: #333;
+        letter-spacing: 4px;
+        line-height: 22px;
+        text-align: center;
+        text-decoration: none;
+        background-position: 0 -90px;
+        margin: 4px 0 0 10px;
+      }
+      #search a:hover {
+        color: #f60;
+        background-position: -80px -90px;
+      }
+      #search .sub {
+        display:none;
+        position: absolute;
+        top: 26px;
+        left: 40px;
+        color: white;
+        width: 198px;
+        background: #2b2b2b;
+        border: 1px solid white;
+      }
+      #search .sub li{
+
+        height:25px;
+        line-height:24px;
+        cursor:pointer;
+        padding-left:10px;
+        margin-bottom:-1px;
+        border-bottom:1px dotted #fff;
+      }
+      #search .sub li:hover{
+        background:#8b8b8b;
+      }
+    </style>
+    <script type="text/javascript">
+    window.onload = function () {
+      var select = document.getElementsByClassName('select')[0]
+      var option = document.getElementsByClassName('sub')[0]
+      var items = option.getElementsByTagName('li')
+      select.onclick = function () {
+        option.style.display = option.style.display == 'block' ? 'none' : 'block'
+        event.cancelBubble = true
+      }
+      for (var i = 0; i < items.length; i++) {
+        items[i].onclick = function () {
+          select.innerHTML = this.innerHTML
+        }
+      }
+      document.onclick = function () {
+        option.style.display = 'none'
+      }
+    }
+
+  </script>
+  </head>
+  <body>
+    <div id="search">
+      <div class="box">
+          <form>
+              <span class="select">请选择游戏名称</span>
+              <a href="javascript:;">搜索</a>
+          </form>
+      </div>
+      <ul class="sub">
+          <li>DOTA2</li>
+          <li>CS:GO</li>
+          <li>Aritifactor</li>
+          <li>Dark Soul</li>
+          <li>Portal</li>
+          <li>Skyrim</li>
+          <li>Zelda</li>
+      </ul>
+    </div>
+  </body>
+</html>

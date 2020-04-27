@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>自动轮播广告（缓冲效果）</title>
+    <style media="screen">
+      body, ul, li{
+        margin:0;
+        padding: 0;
+        background: black;
+      }
+      ul {
+        list-style-type:none;
+      }
+      #container {
+        margin: 10px auto;
+        border: 8px solid white;
+        border-radius: 20px;
+        width: 500px;
+        height:250px;
+        overflow:hidden;
+        position:relative;
+        cursor: pointer;
+      }
+      #container .list {
+        position: relative;
+        width: 500px;
+        height: 250px;
+        background:white;
+      }
+      #container .list ul {
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+      #container .list li {
+        width: 500px;
+        height: 250px;
+      }
+      #container .count{
+          position: absolute;
+          right: 0;
+          bottom: 5px;
+        }
+      #container .count li {
+        color: white;
+        float: left;
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
+        margin-right: 5px;
+        overflow: hidden;
+        background: #f90;
+        opacity: 0.7;
+        border-radius: 20px;
+        text-align:center;
+      }
+      #container .count li.current {
+        color: white;
+        opacity: 1;
+        font-weight: 700;
+        background: #f60;
+        text-align: center;
+      }
+      #temp{
+        width: 100px;
+        height: 100px;
+        background: red;
+        position: absolute;
+      }
+    </style>
+    <script type="text/javascript">
+      window.onload = function () {
+        var container = document.getElementById('container')
+        var list = container.getElementsByTagName('ul')[0]
+        var img = container.getElementsByTagName('img')
+        var timer = playTimer = null
+        var index = 0
+        var border = true
+        var tmp = []
+        var btn = null
+
+        //generate number button
+        for (var i = 0; i < img.length; i++) {
+          tmp.push(`<li>${i + 1}</li>`)
+        }
+
+        //insert element
+        var count = document.createElement('ul')
+        count.className = 'count'
+        count.innerHTML = tmp.join('')
+        container.append(count)
+        btn = container.getElementsByTagName('ul')[1].getElementsByTagName('li')
+
+        //initialize the generated btn statement
+        cutover()
+
+        //move to button to change
+        for (var i = 0; i < btn.length; i++) {
+          btn[i].index = i
+          btn[i].onmouseover = function () {
+            index = this.index
+            cutover()
+          }
+        }
+
+        //setting the function about btn's statement and the call the img's move function
+        function cutover () {
+          for (var i = 0; i < btn.length; i++) {
+            btn[i].className = ''
+          }
+          btn[index].className = 'current'
+          startMove(-(index * img[0].offsetHeight))
+        }
+
+        // setting the callback function in interval playerTimer,get the index and call the cutover function to do make it autoplay
+        function next () {
+          border ? index++ : index--
+          if (index <= 0) {
+            index = 0
+            border = true
+          } else if (index >= btn.length - 1) {
+            index = btn.length - 1
+            border = false
+          }
+          cutover()
+        }
+
+        playTimer = setInterval(next, 3000)
+
+        //stop autoplay when mouseover the container
+        container.onmouseover = function () {
+          clearInterval(playTimer)
+        }
+
+        //restart autoplay when mouseout the container
+        container.onmouseout = function () {
+          playTimer = setInterval(next, 3000)
+        }
+
+        //set the animate move rate interval
+        function startMove (target) {
+          clearInterval(timer)
+          timer = setInterval(function () {
+            doMove(target)
+          }, 30)
+        }
+
+        // set the img  animate function
+        function doMove(target) {
+          var speed = (target - list.offsetTop) / 10
+          speed = speed > 0 ? Math.ceil(speed) : Math.floor(speed)
+          list.offsetTop == target ? clearInterval(timer) : list.style.top = list.offsetTop + speed + 'px'
+        }
+      }
+    </script>
+  </head>
+
+  <body>
+    <div id="container">
+      <ul class='list'>
+        <li><img src="1.jpg" width=500px></li>
+        <li><img src="2.jpg" width=500px alt=""></li>
+        <li><img src="3.jpg" width=500px alt=""></li>
+        <li><img src="4.jpg" width=500px alt=""></li>
+      </ul>
+    </div>
+  </body>
+</html>

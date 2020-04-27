@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <style media="screen">
+      body, div, ul, li{
+        margin: 0;
+        padding: 0;
+        overflow:hidden;
+      }
+      ul{
+        list-style-type: none;
+      }
+      #info {
+        margin: 10px;
+        width: 100;
+        padding: 10px;
+        border: 1px dashed #345;
+        background: #f0f0f0;
+        color: green;
+      }
+      #info ul{
+        margin: 50px 0 50px 50px;
+      }
+      #info ul li{
+        height: 24px;
+        line-height: 24px
+      }
+      #box {
+        width: 100px;
+        height: 100px;
+        position: absolute;
+        background: red;
+        top: 25%;
+        left: 25%;
+      }
+    </style>
+    <script type="text/javascript">
+      window.onload = function () {
+        var body = document.documentElement
+        //左37 上38 右39 下40 num1:49 num2 50 num3 51
+        var box = document.getElementById('box')
+        document.onkeydown = function (event) {
+          if (event.ctrlKey) {
+            switch (event.keyCode) {
+              case 49:
+                box.style.background = 'green'
+                break;
+              case 50:
+                box.style.background = 'yellow'
+                break;
+              case 51:
+                box.style.background = 'blue'
+                break;
+              case 38:
+                var oldWidth = box.offsetWidth;
+                var oldHeight = box.offsetHeight
+                box.style.width = box.offsetWidth + 10 + 'px'
+                box.style.height = box.offsetHeight + 10 + 'px'
+
+                box.style.left = box.offsetLeft - (box.offsetWidth - oldWidth) / 2 + 'px'
+
+                box.style.top = box.offsetTop - (box.offsetHeight - oldHeight) / 2 + 'px'
+                break
+              case 40:
+                var oldWidth = box.offsetWidth;
+                var oldHeight = box.offsetHeight
+                box.style.width = box.offsetWidth - 10 + 'px'
+                box.style.height = box.offsetHeight - 10 + 'px'
+
+                box.style.left = box.offsetLeft - (box.offsetWidth - oldWidth) / 2 + 'px'
+
+                box.style.top = box.offsetTop - (box.offsetHeight - oldHeight) / 2 + 'px'
+                break
+              }
+            } else {
+              switch (event.keyCode) {
+                case 37:
+                  box.style.left = (box.offsetLeft >= 0 ? box.offsetLeft - 10 + 'px' : box.offsetLeft + 'px')
+                  break
+                case 38:
+                  box.style.top = (box.offsetTop >= 0 ? box.offsetTop - 10 + 'px' : box.offsetTop + 'px')
+                  break
+                case 39:
+                  box.style.left = (body.clientWidth - box.offsetLeft - box.offsetWidth >= 0 ? box.offsetLeft + 10 + 'px' : box.offsetLeft + 'px')
+                  break
+                case 40:
+                  box.style.top = (body.clientHeight - box.offsetTop - box.offsetHeight >= 0 ? box.offsetTop + 10 + 'px' : box.offsetTop + 'px')
+                  break
+                }
+            }
+            return false
+          }
+
+      }
+    </script>
+  </head>
+  <body>
+    <div id='info'>
+      使用说明:红色方块为键盘操作区域，您可以进行如下操作：
+      <ul>
+        <li>上：↑ 下：↓ 左：← 右：→</li>
+        <li>Ctrl + 1 : 背景变为绿色</li>
+        <li>Ctrl + 2 : 背景变为黄色</li>
+        <li>Ctrl + 3 : 背景变为蓝色</li>
+        <li>Ctrl + ↑ : 放大</li>
+        <li>Ctrl + ↓ : 缩小</li>
+      </ul>
+    </div>
+    <div id="box"></div>
+  </body>
+</html>

@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>右键菜单自定义层级结构</title>
+    <style type="text/css">
+      html,
+      body {
+        height: 100%;
+        overflow: hidden;
+      }
+
+      body,
+      div,
+      ul,
+      li {
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font: 12px/1.5 \5fae\8f6f\96c5\9ed1;
+      }
+
+      ul {
+        list-style-type: none;
+      }
+
+      #rightMenu {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+      }
+
+      #rightMenu ul {
+        float: left;
+        border: 1px solid #979797;
+        background: #f1f1f1 url(line.png) 24px 0 repeat-y;
+        padding: 2px;
+        box-shadow: 2px 2px 2px rgba(0, 0, 0, .6);
+      }
+
+      #rightMenu ul li {
+        float: left;
+        clear: both;
+        height: 24px;
+        cursor: pointer;
+        line-height: 24px;
+        white-space: nowrap;
+        padding: 0 30px;
+      }
+
+      #rightMenu ul li.sub {
+        background-repeat: no-repeat;
+        background-position: right 9px;
+        background-image: url(arrow.png);
+      }
+
+      #rightMenu ul li.active {
+        background-color: #f1f3f6;
+        border-radius: 3px;
+        border: 1px solid #aecff7;
+        height: 22px;
+        line-height: 22px;
+        background-position: right -8px;
+        padding: 0 29px;
+      }
+
+      #rightMenu ul ul {
+        display: none;
+        position: absolute;
+      }
+    </style>
+    <script type="text/javascript">
+      // setting the function of getting the target element's offset(position)
+      var getOffset = {
+        top: function(obj) {
+          return obj.offsetTop + (obj.offsetParent ? arguments.callee(obj.offsetParent) : 0)
+        },
+        left: function(obj) {
+          return obj.offsetLeft + (obj.offsetParent ? arguments.callee(obj.offsetParent) : 0)
+        }
+      }
+
+      window.onload = function () {
+          var menu = document.getElementById('rightMenu')
+          var ul = menu.getElementsByTagName('ul')
+          var li = menu.getElementsByTagName('li')
+          var showTimer = hideTimer = null
+          var maxWidth = maxHeight = 0
+
+          // declare docRect as a array contains the page's width and its height
+          var docRect = [document.documentElement.offsetWidth, document.documentElement.offsetHeight]
+
+          //initial the menu's display
+          menu.style.display = 'none'
+
+          //set the events and style in the loop
+          for (var i = 0; i < li.length; i++) {
+
+            //add arrow to list which has submenu
+            if (li[i].getElementsByTagName('ul')[0]) {
+              li[i].classList.add('sub')
+            }
+
+            // setting the mouseover event for element li
+            li[i].onmouseover = function () {
+              var that = this
+              //declare the target's submenu as aul(another ul)
+              var aul = that.getElementsByTagName('ul')
+
+              // change style when mouse over
+              that.classList.add('active')
+
+              // if li(parent) has ul(children), there is a sub menu, set the style to show the submenu
+              if (aul[0]) {
+                clearTimeout(hideTimer)
+                showTimer = setTimeout(function () {
+
+                  // initial(hide) the same layer of li's submenu which has the submenu
+                  for (var i = 0; i < that.parentNode.children.length; i++) {
+                    if (that.parentNode.children[i].getElementsByTagName('ul')[0]) {
+                      that.parentNode.children[i].getElementsByTagName('ul')[0].style.display = 'none'
+                    }
+                  }
+
+                  // show the target submenu
+                  aul[0].style.display = 'block'
+                  aul[0].style.top = that.offsetTop + 'px'
+                  aul[0].style.left = that.offsetWidth + 'px'
+                  setWidth(aul[0])
+
+                  // get the max width and height of body without submenu
+                  maxWidth = docRect[0] - aul[0].offsetWidth
+                  maxHeight = docRect[1] - aul[0].offsetHeight
+
+                  // set limit
+                  if (maxWidth < getOffset.left(aul[0])) {
+                    aul[0].style.left = -aul[0].clientWidth + 'px'
+                  }
+                  if (maxHeight < getOffset.top(aul[0])) {
+                    aul[0].style.top = -aul[0].clientHeight + that.offsetTop + that.clientHeight + 'px'
+                  }
+                }, 300)
+              }
+            }
+
+              // setting the mouseover event for element li
+              li[i].onmouseout = function () {
+                var that = this
+                var aul = that.getElementsByTagName('ul')
+                //change style when mouse out
+                that.classList.remove('active')
+
+                clearTimeout(showTimer)
+                hideTimer = setTimeout(function () {
+                  for (var i = 0; i < that.parentNode.children.length; i++) {
+                    if (that.parentNode.children[i].getElementsByTagName('ul')[0]){
+                      that.parentNode.children[i].getElementsByTagName('ul')[0].style.display = 'none'
+                    }
+                  }
+                }, 300)
+              }
+          }
+
+          // DIY right click menu
+          document.oncontextmenu = function(event) {
+            var event = event || window.event
+            menu.style.display = 'block'
+            menu.style.top = event.clientY + 'px'
+            menu.style.left = event.clientX + 'px'
+            setWidth(ul[0])
+
+            //setting the max range when the menu show
+            maxWidth = docRect[0] - menu.offsetWidth
+            maxHeight = docRect[1] - menu.offsetHeight
+
+            //set limit
+            if (menu.offsetTop >maxHeight) {
+              menu.style.top = maxHeight + 'px'
+            }
+            if (menu.offsetLeft >maxWidth) {
+              menu.style.left = maxWidth + 'px'
+            }
+            return false
+          }
+
+          // click to hide the menu
+          document.onclick = function () {
+            menu.style.display = 'none'
+          }
+
+          //get the max width of li and set it to all the li of same layer
+          function setWidth(obj) {
+            maxWidth = 0
+            for (var i = 0; i < obj.children.length; i++) {
+              var ali = obj.children[i]
+
+              //get the sub li's content width,and get the biggest width as the maxWidth
+              var iWidth = ali.clientWidth - parseInt(ali.currentStyle ? ali.currentStyle['paddingLeft'] : getComputedStyle(ali, null)['paddingLeft']) * 2
+              if (iWidth > maxWidth) {
+                maxWidth = iWidth
+              }
+            }
+            // set the maxWidth for every li in the same layer
+            for (var i = 0; i < obj.children.length; i++) {
+              obj.children[i].style.width = maxWidth + 'px'
+            }
+          }
+        }
+    </script>
+  </head>
+  <body>
+    <center>自定义右键菜单，请在页面点击右键查看效果。</center>
+    <div id="rightMenu">
+      <ul>
+        <li><strong>JavaScript 学习</strong></li>
+        <li>
+          第一课
+          <ul>
+            <li>网页特效原理分析</li>
+            <li>响应用户操作</li>
+            <li>提示框效果</li>
+            <li>事件驱动</li>
+            <li>元素属性操作</li>
+          </ul>
+        </li>
+        <li>
+          第二课
+          <ul>
+            <li>改变网页背景颜色</li>
+            <li>函数传参</li>
+            <li>高重用性函数的编写</li>
+            <li>126邮箱全选效果</li>
+            <li>循环及遍历操作</li>
+          </ul>
+        </li>
+        <li>
+          第三课
+          <ul>
+            <li>
+              JavaScript组成
+              <ul>
+                <li>ECMAScript</li>
+                <li>DOM</li>
+                <li>BOM</li>
+                <li>JavaScript兼容性来源</li>
+              </ul>
+              </li>
+            <li>JavaScript出现的位置、优缺点</li>
+            <li>变量、类型、typeof、数据类型转换、变量作用域</li>
+            <li>
+              闭包
+              <ul>
+                <li>什么是闭包</li>
+                <li>简单应用</li>
+                <li>闭包缺点</li>
+              </ul>
+            </li>
+            <li>运算符</li>
+            <li>程序流程控制</li>
+            <li>
+              定时器的使用
+              <ul>
+                <li>setInterval</li>
+                <li>setTimeout</li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>

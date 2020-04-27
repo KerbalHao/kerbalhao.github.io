@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <style media="screen">
+            * {
+                margin: 0;
+                padding: 0
+            }
+            body {
+                background: grey;
+                width: 100%;
+                height: 100%;
+                position: relative;
+            }
+            div {
+                background:black;
+                width: 100px;
+                height: 100px;
+                border: 1px white solid;
+                position: absolute;
+                cursor: move
+            }
+            #box1 {
+                top: 100px;
+                left: 100px
+            }
+            #box2 {
+                top: 100px;
+                left: 300px;
+            }
+            #tmp{
+                background:black;
+                width: 100px;
+                height: 100px;
+                border: 1px white solid;
+                position: absolute;
+                opacity: 0.5;
+            }
+        </style>
+        <!-- use the mouse event and createElement to imitate the drag and move function
+        <script type="text/javascript">
+        var zIndex = 1
+            window.onload = function () {
+                var box1 = document.getElementById('box1')
+                var box2 = document.getElementById('box2')
+                drag(box1)
+                drag(box2)
+            }
+            //the function make the drag happend
+            function drag(obj) {
+                var disX = disY = 0
+                obj.onmousedown = function (event) {
+                    var event = event || window.event
+                    //get the left and top of mouse click inside the obj
+                    disX = event.clientX - this.offsetLeft
+                    disY = event.clientY - this.offsetTop
+                    console.log(disY)
+                    //create a new div as the moving one
+                    var tmp = document.createElement('div')
+                    tmp.id = 'tmp'
+                    //set the new div's left and the top when the mouse down
+                    tmp.style.left = this.currentStyle ? this.currentStyle['left'] : getComputedStyle(this, null)['left']
+
+                    tmp.style.top = this.currentStyle ? this.currentStyle['top'] : getComputedStyle(this, null)['top']
+
+                    //make sure the moving one is on  the toppest of the document.
+                    tmp.style.zIndex = zIndex ++
+                    document.body.appendChild(tmp)
+                    //make the new div move as the mouse move
+                    document.onmousemove = function (event) {
+                        var event = event || window.event
+                        var left = event.clientX - disX
+                        var top = event.clientY - disY
+                        //get the max range the div can move
+                        var maxL = document.documentElement.clientWidth - obj.offsetWidth
+                        var maxT = document.documentElement.clientHeight - obj.offsetHeight
+                        //set limit
+                        if (left <= 0) {
+                            left = 0
+                        } else if (left >= maxL) {
+                            left = maxL
+                        }
+                        if (top <=0) {
+                            top = 0
+                        }else if (top >= maxT) {
+                            top = maxT
+                        }
+                        tmp.style.left = left + 'px'
+                        tmp.style.top = top + 'px'
+                        return false
+                    }
+                    //make the target box be in the position when mouse up happend
+                    document.onmouseup = function () {
+                        document.onmousemove = null;
+                        document.onmouseup = null
+                        obj.style.top = tmp.style.top
+                        obj.style.left = tmp.style.left
+                        document.body.removeChild(tmp)
+                    }
+                    return false
+                }
+            }
+        </script> -->
+        <!-- use the javascript original drag and move API -->
+        <script type="text/javascript">
+            window.onload = function () {
+                var box1 = document.getElementById('box1')
+                var box2 = document.getElementById('box2')
+                drag(box1)
+                drag(box2)
+            }
+            var zIndex = 1
+            function drag (obj) {
+                obj.ondragstart = function (event) {
+                    var disX = event.clientX - this.offsetLeft
+                    var disY = event.clientY - this.offsetTop
+
+
+                    document.ondragover = function () {
+                        return false
+                    }
+                    document.ondragenter = function () {
+                        return false
+                    }
+                    obj.ondragend = function (event) {
+                        console.log(1)
+                        var left = event.clientX - disX
+                        var top = event.clientY - disY
+                        var maxL = document.documentElement.clientWidth - obj.offsetWidth
+                        var maxT = document.documentElement.clientHeight - obj.offsetHeight
+                        if (left <= 0) {
+                            left = 0
+                        } else if (left >= maxL) {
+                            left = maxL
+                        }
+                        if (top <=0) {
+                            top = 0
+                        }else if (top >= maxT) {
+                            top = maxT
+                        }
+                        obj.style.zIndex = zIndex ++
+                        obj.style.top = top + 'px'
+                        obj.style.left = left + 'px'
+                    }
+                }
+            }
+        </script>
+    </head>
+    <body>
+        <div id="box1" draggable="true">
+        </div>
+        <div id="box2" draggable="true">
+        </div>
+    </body>
+</html>

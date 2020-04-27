@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>4.使用for-loop将div变色</title>
+    <style media="screen">
+      #outer {
+        text-align: center;
+        width: 100%;
+      }
+      #outer div {
+        margin-bottom: 50px;
+        width: 200px;
+        height: 200px;
+        display: inline-block;
+        background-color:black
+      }
+      button {
+        zoom: 2
+      }
+    </style>
+  </head>
+  <body>
+    <div id="outer">
+        <div></div>
+        <div></div>
+        <div></div>
+        <br>
+        <button>点击将DIV变成红色</button>
+    </div>
+    <script type="text/javascript">
+      var divs = document.getElementById('outer').getElementsByTagName('div')
+      var button = document.getElementsByTagName('button')[0]
+      button.onclick = function() {
+        for (let i = 0; i < divs.length; i ++) {
+          divs[i].style.backgroundColor = 'red'
+        }
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>3.函数接收参数并弹出</title>
+    <style media="screen">
+      #container {
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div id='container'>
+      <input type="text" id="province" placeholder="请输入您所在的省份"><br>
+      <input type="text" id="city" placeholder="请输入您所在的城市"><br>
+      <input type="button" name="submit" value="传参">
+    </div>
+    <script type="text/javascript">
+      let inputs = document.getElementsByTagName('input')
+      inputs[2].onclick = function () {
+        alert(inputs[0].value)
+        alert(inputs[1].value)
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>5.函数传参，改变DIV的CSS值</title>
+    <style media="screen">
+      body {
+        text-align:center;
+      }
+      #div1 {
+        margin: auto;
+        width: 200px;
+        height: 200px;
+        background: black;
+        color:white
+      }
+    </style>
+    <script type="text/javascript">
+      window.onload = function() {
+        var div1 = document.getElementById('div1')
+        var prop = document.getElementsByTagName('input')[0]
+        var val = document.getElementsByTagName('input')[1]
+        var confirm = document.getElementsByTagName('button')[0]
+        var reset = document.getElementsByTagName('button')[1]
+        confirm.onclick = function() {
+          div1.style[prop.value] = val.value
+        }
+        reset.onclick = function() {
+          div1.style['background'] = 'black'
+        }
+      }
+    </script>
+  </head>
+  <body>
+      <div id="outer">传参
+        <p>
+          <label>属性名：</label>
+          <input type="text" value="background" />
+        </p>
+        <p>
+          <label>属性值：</label>
+          <input type="text" value="blue" />
+        </p>
+        <p>
+          <button>确定</button>
+          <button>重置</button>
+        </p>
+    </div>
+    <div id="div1">
+      在上方输入框输入"属性名"及"属性值"，点击确定按钮查看效果。
+    </div>
+  </body>
+</html>

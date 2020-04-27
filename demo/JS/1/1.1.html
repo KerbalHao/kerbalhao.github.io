@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title>1.控制DIV属性</title>
+        <style media="screen">
+            body {
+                text-align: center;
+                height: 300px
+            }
+            div {
+                width: 100px;
+                height: 100px;
+                margin: auto auto;
+                background: black;
+            }
+        </style>
+    </head>
+    <body>
+        <button id='wider'>变宽</button>
+        <button id='heigher'>变高</button>
+        <button id='color'>变色</button>
+        <button id='hide'>隐藏</button>
+        <button id='reset'>复原</button>
+        <div id='box'>
+        </div>
+        <script type="text/javascript">
+            var changeStyle = function (elem, attr, value)
+            {
+            	elem.style[attr] = value
+            };
+            window.onload = function ()
+            {
+            	var oBtn = document.getElementsByTagName("button");
+            	var oDiv = document.getElementById("box");
+            	var oAtt = ["width","height","background","display","display"];
+            	var oVal = ["200px","200px","red","none","block"];
+
+            	for (var i = 0; i < oBtn.length; i++)
+            	{
+            		oBtn[i].index = i;
+            		oBtn[i].onclick = function ()
+            		{
+            			this.index == oBtn.length - 1 ? oDiv.style.cssText = "":changeStyle(oDiv, oAtt[this.index], oVal[this.index])
+
+            		}
+            	}
+            };
+        </script>
+    </body>
+</html>

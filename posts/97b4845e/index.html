@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="generator" content="Hexo 4.2.0"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>Post和Get的区别 - kerbalHao</title><meta description="post更安全（不会作为url的一部分，不会被缓存、保存在服务器日志、以及浏览器浏览记录中）  post发送的数据更大（get有url长度限制）"><meta property="og:type" content="article"><meta property="og:title" content="Post和Get的区别"><meta property="og:url" content="https://kerbalhao.github.io/posts/97b4845e/"><meta property="og:site_name" content="KerbalHao"><meta property="og:description" content="post更安全（不会作为url的一部分，不会被缓存、保存在服务器日志、以及浏览器浏览记录中）  post发送的数据更大（get有url长度限制）"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://cdn.jsdelivr.net/gh/kerbalhao/blog_images/avatar.jpg"><meta property="article:published_time" content="2019-10-14T03:08:06.000Z"><meta property="article:modified_time" content="2020-04-27T11:03:02.686Z"><meta property="article:author" content="KerbalHao"><meta property="article:tag" content="categories-JS"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="https://cdn.jsdelivr.net/gh/kerbalhao/blog_images/avatar.jpg"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://kerbalhao.github.io/posts/97b4845e/"},"headline":"Post和Get的区别","image":["https://cdn.jsdelivr.net/gh/kerbalhao/blog_images/avatar.jpg"],"datePublished":"2019-10-14T03:08:06.000Z","dateModified":"2020-04-27T11:03:02.686Z","author":{"@type":"Person","name":"KerbalHao"},"description":"post更安全（不会作为url的一部分，不会被缓存、保存在服务器日志、以及浏览器浏览记录中）  post发送的数据更大（get有url长度限制）"}</script><link rel="alternative" href="/atom.xml" title="kerbalHao" type="application/atom+xml"><link rel="icon" href="https://cdn.jsdelivr.net/gh/removeif/removeif.github.io@latest/img/wico.png"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro|Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Microsoft YaHei:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&amp;amp;subset=latin,latin-ext|Inconsolata|Itim|Lobster.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-dark.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" defer></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.12/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css"><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/kerbalhao/kerbalhao.github.io/css/style.min.css"><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/gh/kerbalhao/kerbalhao.github.io/js/globalUtils.min.js"></script></head><body class="is-3-column has-navbar-fixed-top"><nav class="navbar navbar-main is-fixed-top"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="https://cdn.jsdelivr.net/gh/kerbalhao/blog_images/log.jpg" alt="kerbalHao" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">首页</a><a class="navbar-item" href="/archives">归档</a><a class="navbar-item" href="/categories">分类</a><a class="navbar-item" href="/tags">标签</a><a class="navbar-item" href="/self-talking">碎碎念</a><a class="navbar-item" href="/message">留言</a><a class="navbar-item" href="/about">关于</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/kerbalhao"><i class="fab fa-github"></i></a><a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a><a class="navbar-item" id="night-nav" title="Night Mode" href="javascript:;"><i class="fas fa-moon" id="night-icon"></i></a></div></div></div></nav><script type="text/javascript" src="https://cdn.jsdelivr.net/gh/kerbalhao/kerbalhao.github.io/js/theme-setting.min.js"></script><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-9-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><time class="level-item" dateTime="2019-10-14T03:08:06.000Z">2019-10-14</time><a class="commentCountImg" href="/posts/97b4845e/#comment-container"><span class="display-none-class">9783feb302077f4ef72d7e246ab5e405</span><img class="not-gallery-item" src="https://cdn.jsdelivr.net/gh/kerbalhao/kerbalhao.github.io/img/chat.svg"> <span class="commentCount" id="9783feb302077f4ef72d7e246ab5e405"> 99+</span>    </a><span class="level-item">3 分钟 读完 (大约 475 个字)</span><span class="level-item" id="busuanzi_container_page_pv"><i class="far fa-eye"></i>&nbsp;&nbsp;<span id="busuanzi_value_page_pv">0</span>次访问</span></div></div><h1 class="title is-3 is-size-4-mobile">Post和Get的区别</h1><div class="content"><ol>
+<li><p><code>post</code>更安全（不会作为<code>url</code>的一部分，不会被缓存、保存在服务器日志、以及浏览器浏览记录中）</p>
+</li>
+<li><p><code>post</code>发送的数据更大（<code>get</code>有<code>url</code>长度限制）</p>
+<a id="more"></a>
+</li>
+<li><p><code>post</code>能发送更多的数据类型（<code>get</code>只能发送<code>ASCII</code>字符）</p>
+</li>
+<li><p><code>post</code>比<code>get</code>慢   </p>
+</li>
+<li><p><code>post</code>用于修改和写入数据，<code>get</code>一般用于搜索排序和筛选之类的操作（淘宝，支付宝的搜索查询都是<code>get</code>提交），目的是资源的获取，读取数据</p>
+<h3 id="post比get慢原因"><a href="#post比get慢原因" class="headerlink" title="post比get慢原因"></a><code>post</code>比<code>get</code>慢原因</h3></li>
+</ol>
+<ul>
+<li><code>post</code>请求包含更多的请求头因为<code>post</code>需要在请求的<code>body</code>部分包含数据，所以会多了几个数据描述部分的首部字段（如：<code>content-type</code>）等。</li>
+<li><code>post</code>在真正接收数据之前会先将请求头发送给服务器进行确认，然后才真正发送数据</li>
+<li><h3 id="Post和-Get请求过程"><a href="#Post和-Get请求过程" class="headerlink" title="Post和 Get请求过程"></a><code>Post</code>和 <code>Get</code>请求过程</h3><h4 id="post请求的过程："><a href="#post请求的过程：" class="headerlink" title="post请求的过程："></a><code>post</code>请求的过程：</h4></li>
+</ul>
+<pre><code>1. 浏览器请求`tcp`连接（第一次握手）
+2. 服务器答应进行`tcp`连接（第二次握手）
+3. 浏览器确认，并发送`post`请求头（第三次握手，这个报文比较小，所以`http`会在此时进行第一次数据发送）
+4. 服务器返回100 `Continue`响应
+5. 浏览器发送数据
+6. 服务器返回200 `OK`响应.</code></pre><h4 id="get请求的过程："><a href="#get请求的过程：" class="headerlink" title="get请求的过程："></a><code>get</code>请求的过程：</h4><ol>
+<li>浏览器请求<code>tcp</code>连接（第一次握手）</li>
+<li>服务器答应进行<code>tcp</code>连接（第二次握手）</li>
+<li>浏览器确认，并发送<code>get</code>请求头和数据（第三次握手，这个报文比较小，所以<code>http</code>会在此时进行第一次数据发送）</li>
+<li>服务器返回200 <code>OK</code>响应</li>
+</ol>
+<hr>
+<p>作者：确认过眼神cxy<br>来源：CSDN<br>原文：<a href="https://blog.csdn.net/zzk220106/article/details/78595108?utm_source=copy">https://blog.csdn.net/zzk220106/article/details/78595108?utm_source=copy</a></p>
+</div><ul class="post-copyright"><li><strong>本文标题：</strong><a href="https://kerbalhao.github.io/posts/97b4845e/">Post和Get的区别</a></li><li><strong>本文作者：</strong><a href="https://kerbalhao.github.io">KerbalHao</a></li><li><strong>本文链接：</strong><a href="https://kerbalhao.github.io/posts/97b4845e/">https://kerbalhao.github.io/posts/97b4845e/</a></li><li><strong>版权声明：</strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！</li></ul><div><div class="recommend-post"><span class="is-size-6 has-text-grey has-mr-7"># 相关文章</span><br><span>  1.<a class="is-size-6" href="/posts/f4f838c8/" target="_blank">个人 dota2 项目</a><br></span><span>  2.<a class="is-size-6" href="/posts/f79b72d/" target="_blank">Lua学习</a><br></span><span>  3.<a class="is-size-6" href="/posts/a284be5d/" target="_blank">函数高阶应用</a><br></span><span>  4.<a class="is-size-6" href="/posts/14294c2c/" target="_blank">对于函数参数的简介</a><br></span><span>  5.<a class="is-size-6" href="/posts/24667931/" target="_blank">“this”探索</a><br></span><span>  6.<a class="is-size-6" href="/posts/ab4edb64/" target="_blank">Js面向对象、DRY原则以及函数式编程</a><br></span><span>  7.<a class="is-size-6" href="/posts/66c0dcbe/" target="_blank">JS 12个重要概念以及reduce方法详解</a><br></span><span>  8.<a class="is-size-6" href="/posts/2cd522ad/" target="_blank">深拷贝与浅拷贝的区别，实现深拷贝的几种方法</a><br></span></div><div class="recommend-post"><span class="is-size-6 has-text-grey has-mr-7"># 推荐文章</span><br><span>  1.<a class="is-size-6" href="/posts/66c0dcbe/" target="_blank">JS 12个重要概念以及reduce方法详解</a><br></span><span>  2.<a class="is-size-6" href="/posts/ab4edb64/" target="_blank">Js面向对象、DRY原则以及函数式编程</a><br></span><span>  3.<a class="is-size-6" href="/posts/70af37a7/" target="_blank">React 思维导图</a><br></span><span>  4.<a class="is-size-6" href="/posts/f79b72d/" target="_blank">Lua学习</a><br></span><span>  5.<a class="is-size-6" href="/posts/97b4845e/" target="_blank">Post和Get的区别</a><br></span><span>  6.<a class="is-size-6" href="/posts/f4f838c8/" target="_blank">个人 dota2 项目</a><br></span></div></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/css/share.min.css"><div class="social-share"></div><script src="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/js/social-share.min.js"></script></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/posts/2cd522ad/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">深拷贝与浅拷贝的区别，实现深拷贝的几种方法</span></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div id="comment-container"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.6.0/dist/gitalk.css"><script> $.getScript('https://cdn.jsdelivr.net/gh/kerbalhao/kerbalhao.github.io/js/gitalk.min.js', function () { 
+            var gitalk = new Gitalk({
+            id: '9783feb302077f4ef72d7e246ab5e405',
+            repo: 'blog_comment',
+            owner: 'kerbalhao',
+            clientID: 'a71d38c4a8dafab99dc9',
+            clientSecret: '2ac14858f30545b5beea2e920b90d25dcbf1c78b',
+            admin: ["kerbalhao"],
+            createIssueManually: true,
+            distractionFreeMode: false,
+            perPage: 10,
+            pagerDirection: 'last',
+            
+            
+            enableHotKey: true,
+            isLocked: false
+        })
+        gitalk.render('comment-container')});</script></div></div></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1 is-sticky"><div class="card widget toc-scroll" id="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">目录</h3><ul class="menu-list toc"><li><a class="is-flex toc-item" id="toc-item-post比get慢原因" href="#post比get慢原因"><span>post比get慢原因</span></a></li><li><a class="is-flex toc-item" id="toc-item-Post和-Get请求过程" href="#Post和-Get请求过程"><span>Post和 Get请求过程</span></a><ul class="menu-list toc"><li><a class="is-flex toc-item" id="toc-item-post请求的过程：" href="#post请求的过程："><span>post请求的过程：</span></a></li><li><a class="is-flex toc-item" id="toc-item-get请求的过程：" href="#get请求的过程："><span>get请求的过程：</span></a></li></ul></li></ul></div></div><script type="text/javascript" async>
+        $(document).ready(function () { //参考自 https://github.com/ppoffice/hexo-theme-icarus/pull/616/files
+            var observerTopMargin;
+            var scrollObserver;
+            var headerElems = $(".headerlink");
+            var activeTocItem;
+        
+            function initIntersectionObserver(docHeight) {
+                observerTopMargin = docHeight;
+                scrollObserver = new IntersectionObserver(scrollCallBack,
+                    {
+                        root: null,  // viewpoint
+                        rootMargin: docHeight + "px 0px -80% 0px"  // cover top 30% of viewport to the top of document
+                    })
+            }
+        
+            function scrollCallBack(entries, observer) {
+                if ($(window).scrollTop() > observerTopMargin * 0.7) { 
+                    // User somehow scroll to 70% of observerTopMargin (which is inited as 200% document height)
+                    // Observer top margin need to extend to cover all the space to the top of the document
+                    initIntersectionObserver(observerTopMargin * 2)
+                    observer.disconnect();
+                    return;
+                }
+                let toActive;
+                if (entries[0].intersectionRatio == 1) {  // enter viewed area
+                    let entry = entries.reduce((u, v) => (u.target.toc_id > v.target.toc_id ? u : v));  // get the lowest item
+                    toActive = $("#toc-item-" + $(entry.target).attr("href").substr(1));
+                } else {
+                    let entry = entries.reduce((u, v) => (u.target.toc_id < v.target.toc_id ? u : v));  // get the highest item
+                    let idx = Math.max(entry.target.toc_id - 1, 0);
+                    toActive = $("#toc-item-" + $(headerElems[idx]).attr("href").substr(1));
+                }
+                if (activeTocItem) activeTocItem.removeClass("is-current");
+                activeTocItem = toActive
+                activeTocItem.addClass("is-current");
+            }
+        
+            initIntersectionObserver($(document).height() * 2);
+            headerElems.each(function (index, obj) {
+                obj.toc_id = index;
+                scrollObserver.observe(obj);
+            })
+        });</script></div><div class="card widget"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="is-rounded" src="https://cdn.jsdelivr.net/gh/kerbalhao/blog_images/avatar.jpg" alt="KerbalHao"></figure><p class="title is-size-4 is-block line-height-inherit">KerbalHao</p><p class="is-size-6 is-block">不咕了，从今天开始种树</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>广州</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">文章</p><a href="/archives"><p class="title">10</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">分类</p><a href="/categories"><p class="title">1</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">标签</p><a href="/tags"><p class="title">4</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="/" target="_blank" rel="noopener">关注我</a></div><div class="level is-mobile"><a class="level-item button is-transparent is-white is-marginless" target="_blank" rel="noopener" title="Github" href="https://github.com/kerbalhao"><i class="fab fa-github"></i></a><a class="level-item button is-transparent is-white is-marginless" target="_blank" rel="noopener" title="Email" href="mailto:kerbalhao@foxmail.com"><i class="fa fa-envelope"></i></a><a class="level-item button is-transparent is-white is-marginless" target="_blank" rel="noopener" title="RSS" href="/atom.xml"><i class="fas fa-rss"></i></a></div><div><hr><p id="hitokoto">:D 一言句子获取中...</p><script type="text/javascript" defer>function getYiyan(){
+                                $.getJSON("https://v1.hitokoto.cn/", function (data) {
+                                if(data){
+                                    $('#hitokoto').html("");
+                                    $('#hitokoto').append("<strong style='color: #3273dc;'>"+data.hitokoto+"</strong>"+
+                                    "<p>"+"来源《"+data.from+"》</p><p>提供者-"+data.creator+"</p>");
+                                }});}
+                                $(function (){getYiyan();$('#hitokoto').click(function(){getYiyan();})});</script></div></div></div><div class="card widget"><div class="card-content"><div class="menu"><h3 class="menu-label">分类</h3><ul class="menu-list"><li><a class="level is-mobile is-marginless" href="/categories/React/"><span class="level-start"><span class="level-item">React</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li></ul></div></div></div><div class="card widget"><div class="card-content"><div class="menu"><h3 class="menu-label">归档</h3><ul class="menu-list"><li><a class="level is-mobile is-marginless" href="/archives/2020/04/"><span class="level-start"><span class="level-item">四月 2020</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile is-marginless" href="/archives/2020/03/"><span class="level-start"><span class="level-item">三月 2020</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/archives/2020/02/"><span class="level-start"><span class="level-item">二月 2020</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/archives/2020/01/"><span class="level-start"><span class="level-item">一月 2020</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/archives/2019/12/"><span class="level-start"><span class="level-item">十二月 2019</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><a class="level is-mobile is-marginless" href="/archives/"><span class="level-start"><span class="level-item">查看全部&gt;&gt;</span></span></a></ul></div></div></div><div class="card widget"><div class="card-content"><div class="menu"><h3 class="menu-label">标签</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/JS/"><span class="tag">JS</span><span class="tag is-grey-lightest">7</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Modern-JavaScript-Tutorial/"><span class="tag">Modern JavaScript Tutorial</span><span class="tag is-grey-lightest">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Lua/"><span class="tag">Lua</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/React/"><span class="tag">React</span><span class="tag is-grey-lightest">1</span></a></div></div></div></div></div></div></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="https://cdn.jsdelivr.net/gh/kerbalhao/blog_images/log.jpg" alt="kerbalHao" height="28"></a><p class="size-small"><span>&copy; 2020 KerbalHao</span>  Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a>,Modify by <a href="https://github.com/removeif/hexo-theme-amazing" target="_blank">removeif</a> <br><span>© 版权说明：[本网站所有内容均收集于互联网或自己创作,<br>    方便于网友与自己学习交流，如有侵权，请<a href="/message" target="_blank">留言</a>，立即处理]<br></span><div class="size-small"><span id="busuanzi_container_site_uv">❤️感谢<strong> <span id="busuanzi_value_site_uv">99+</span> </strong></span>小伙伴的<strong> <span id="busuanzi_value_site_pv">99+</span> </strong>次光临！❤️</div></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/kerbalhao"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script>moment.locale("zh-CN");</script><script>var IcarusThemeSettings = {
+            site: {
+                url: 'https://kerbalhao.github.io',
+                external_link: {"enable":true,"exclude":[]}
+            },
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script src="https://cdn.jsdelivr.net/gh/kerbalhao/kerbalhao.github.io/js/animation.min.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="https://cdn.jsdelivr.net/gh/kerbalhao/kerbalhao.github.io/js/back-to-top.min.js" defer></script><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.12/dist/js/lightgallery-all.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/gh/kerbalhao/kerbalhao.github.io/js/toc.min.js" defer></script><script src="https://cdn.jsdelivr.net/gh/kerbalhao/kerbalhao.github.io/js/main.min.js" defer></script><script src="https://cdn.jsdelivr.net/gh/kerbalhao/kerbalhao.github.io/js/comment-issue-data.min.js" defer></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/kerbalhao/kerbalhao.github.io/css/insight.min.css"><div class="searchbox ins-search"><div class="searchbox-container ins-search-container"><div class="searchbox-input-wrapper"><input class="searchbox-input ins-search-input" type="text" placeholder="想要查找什么..."><span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span></div><div class="searchbox-result-wrapper ins-section-wrapper"><div class="ins-section-container"></div></div></div></div><script>(function (window) {
+            var INSIGHT_CONFIG = {
+                TRANSLATION: {
+                    POSTS: '文章',
+                    PAGES: '页面',
+                    CATEGORIES: '分类',
+                    TAGS: '标签',
+                    UNTITLED: '(无标题)',
+                },
+                CONTENT_URL: 'https://cdn.jsdelivr.net/gh/kerbalhao/kerbalhao.github.io/content.json',
+            };
+            window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+        })(window);</script><script src="https://cdn.jsdelivr.net/gh/kerbalhao/kerbalhao.github.io/js/insight.min.js" defer></script></body></html>

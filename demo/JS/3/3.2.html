@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>3.2 网页电子时钟</title>
+    <style media="screen">
+      #container {
+        background: black;
+        margin: 50px auto;
+        padding: 10px;
+        width: 300px;
+        color: white;
+        text-align: center
+      }
+        #container input {
+        width: 50px;
+      }
+      #container1 {
+        background: black;
+        width: 200px;
+        height: 60px;
+        margin: 50px auto;
+        padding: 10px 10px;
+        color: white;
+        text-align:center;
+      }
+        #container1 input {
+          width: 50px;
+          margin: 0 auto;
+          text-align: center
+        }
+        #container1 button {
+          margin: 20px auto;
+          width: 190px;
+          border-radius: 5px;
+          background: green;
+          color:white
+        }
+    </style>
+    <script type="text/javascript">
+      window.onload = function() {
+        //时钟
+        var container = document.getElementById('container')
+          var hour = container.getElementsByTagName('input')[0]
+          var minute = container.getElementsByTagName('input')[1]
+          var second = container.getElementsByTagName('input')[2]
+          var timer = setInterval(function() {
+            var a = new Date()
+            hour.value = format(a.getHours())
+            minute.value = format(a.getMinutes())
+            second.value = format(a.getSeconds())
+          }, 1000)
+
+        //倒计时
+        var timeGone = null
+        var container1 = document.getElementById('container1')
+        var setting = container1.getElementsByTagName('input')
+        var start = container1.getElementsByTagName('button')[0]
+        for (var i = 0; i < setting.length; i++) {
+          setting[i].onkeyup = function () {
+            this.value = this.value.replace(/[^\d]/, '')
+          }
+        }
+        start.onclick = function() {
+          var m = parseInt(setting[0].value)
+          var s = parseInt(setting[1].value)
+          var sum = m * 60 + s, b
+          if (start.innerText == '启动') {
+            timeGone = setInterval(function () {
+              sum -= 1
+              if (setting[1].value <= 0 && setting[0].value <= 0) {
+                clearInterval(timeGone)
+              } else {
+                setting[1].value = format(sum % 60)
+                setting[0].value = format(Math.floor((sum / 60)))
+              }
+            }, 1000)
+            setting[0].disabled = 'disabled'
+            setting[1].disabled = 'disabled'
+            start.style.background = 'red'
+            start.innerText = '停止'
+          } else {
+            clearInterval(timeGone)
+            start.style.background = 'green'
+            start.innerText = '启动'
+            setting[0].disabled = ''
+            setting[1].disabled = ''
+          }
+        }
+      }
+      function format(time) {
+        return time.toString().replace(/^(\d)$/, '0$1')
+      }
+    </script>
+  </head>
+  <body>
+    <div id="container">
+      <input type="text" readonly='readonly'  value="" id='hour'> 时 <input type="text" readonly='readonly' id='minute' value=""> 分 <input type="text" readonly='readonly' id='second' value=""> 秒
+    </div>
+    <div id="container1">
+      <input type="text" value="0"> 分钟
+      <input type="text" value="0"> 秒 <br>
+      <button type="button" name="button">启动</button>
+    </div>
+  </body>
+</html>

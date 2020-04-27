@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>js动画效果</title>
+    <style media="screen">
+      body {
+        margin:0;
+        padding: 0;
+      }
+      #div1 {
+        background: red;
+        width: 200px;
+        height: 300px;
+        position:relative;
+        left: -200px;
+        top:0;
+        margin-bottom: 50px;
+      }
+          #div1 span{
+            left: 200px;
+            position: absolute;
+            height:100px;
+            width: 20px;
+            background: blue;
+            top: 75px;
+            color:white;
+            cursor: pointer;
+          }
+
+      #div2 {
+         width:200px;
+         margin-bottom: 50px;
+       }
+          .opacity {
+            opacity: 0.3;
+            width: 200px;
+            height: 200px;
+            background: red;
+            margin:10px;
+          }
+
+      #div3 {
+        margin: 50px;
+      }
+          .move{
+            width: 200px;
+            height: 100px;
+            background: yellow;
+            margin: 10px;
+            border: 1px solid black;
+
+          }
+
+      #div4 {
+        margin: 50px;
+      }
+          .chain {
+            background: blue;
+            margin: 10px;
+            width: 200px;
+            height: 200px;
+            opacity: 0.3
+          }
+      #div5 {
+        margin: 50px;
+      }
+          .sametime {
+            background: orange;
+            width: 200px;
+            height: 200px;
+            margin: 10px;
+            opacity: 0.3
+          }
+    </style>
+    <script type="text/javascript">
+    window.onload = function () {
+      //  匀速||变速移动
+      var div1 = document.getElementById('div1')
+      div1.onmouseover = function () {
+        moveFrame(this, {'left': 0})
+      }
+      div1.onmouseout = function () {
+          moveFrame(this, {'left': -200})
+      }
+      // 透明度变化
+      var div2 = document.getElementById('div2')
+      div2.onmouseover =  function() {
+        moveFrame(this, {'opacity': 100})
+      }
+      div2.onmouseout =  function() {
+        moveFrame(this, {'opacity': 30})
+      }
+      // 多物体运动
+      var div3 = document.getElementById('div3')
+      var moveBox = div3.getElementsByClassName('move')
+      for (var i = 0; i < moveBox.length; i++) {
+        moveBox[i].timer = null
+        moveBox[i].onmouseover = function() {
+          moveFrame(this, {'width': 400})
+        }
+        moveBox[i].onmouseout = function() {
+          moveFrame(this, {'width': 200})
+        }
+      }
+
+      var div4 = document.getElementById('div4')
+      var chain = div4.getElementsByClassName('chain')
+      for (var i = 0; i < chain.length; i++) {
+        chain[i].onmouseover = function() {
+          var that = this
+          moveFrame(this, {'width': 400}, function() {
+            moveFrame(that, {'height': 400}, function() {
+              moveFrame(that, {'opacity': 100})
+            })
+          })
+        }
+        chain[i].onmouseout = function() {
+          var that = this
+          moveFrame(this, {'opacity': 30}, function() {
+            moveFrame(that, {'height': 200}, function() {
+              moveFrame(that, {'width': 200})
+          })
+          })
+        }
+      }
+
+      var div5 = document.getElementById('div5')
+      var sameTimeBox = div5.getElementsByClassName('sametime')
+      for (var i = 0; i < sameTimeBox.length; i++) {
+        sameTimeBox[i].onmouseover = function() {
+          var that = this
+          moveFrame(that, {width: 400,height: 400, opacity: 100})
+        }
+        sameTimeBox[i].onmouseout = function() {
+          var that = this
+          moveFrame(that, {width: 200,height: 200, opacity: 30})
+        }
+      }
+    }
+
+    function  getStyle (obj, attr) {
+      if (obj.currentStyle) {
+        return obj.currentStyle(attr)
+      } else if (getComputedStyle) {
+        return getComputedStyle(obj, null)[attr]
+      }
+    }
+    //封装运动框架
+    function moveFrame (obj, json, fn) {
+      clearInterval(obj.timer)
+      var flag = true
+      obj.timer = setInterval(function() {
+        var target = json[attr], curStyle, speed
+        for (var attr in json) {
+          //判断需要修改的属性名
+          if (attr == 'opacity') {
+            curStyle = Math.round(parseFloat(getStyle(obj, attr)) * 100)
+          } else {
+            curStyle = parseInt(getStyle(obj, attr))
+          }
+          //设置动画速度
+          speed = (target - curStyle) / 10
+          speed = speed > 0 ? Math.ceil(speed) : Math.floor(speed)
+          //判断何时停止
+          if (curStyle != target) {
+            flag = false
+            }
+            //设置动画效果
+          if (attr == 'opacity') {
+            obj.style[attr] = (curStyle + speed) / 100
+          } else {
+            obj.style[attr] = curStyle + speed + 'px'
+          }
+          if (flag) {
+            clearInterval(timer)
+            if(fn) {
+              fn()
+            }
+          }
+        }
+      }, 30)
+    }
+    </script>
+    <script type="text/javascript">
+    var getStyle = function (obj, attr) {
+      if (currentStyle) {
+        return obj.currentStyle(attr)
+      } else if (getComputedStyle){
+        return getComputedStyle(obj)[attr]
+      }
+    }
+    var a = function (obj, json, fn) {
+
+      //设置标志用于判断停止定时器，首先取消当前有的定时器，避免定时器多点执行
+      var flag = true
+      clearInterval(obj.timer)
+      // 开始设置定时器
+      obj.timer = setInterval(function () {
+
+        //遍历参数json中的数据
+        for (var attr in json) {
+          var target = json[attr], speed, currentStyle
+
+          //判断属性名，opacity中的数值先转化为整数
+          if (attr == 'opacity') {
+            currentStyle = Math.round(parseFloat(getStyle(obj, attr)) * 100)
+          } else {
+            currentStyle = parseInt(getStyle(obj, attr))
+          }
+
+          //设置速度，变速运动，对速度进行取整
+          speed = (target - currentStyle) / 10
+          speed = speed > 0 ? Math.ceil(speed) : Math.floor(speed)
+
+          //判断停止标志，对于json中的attr，如果有一个attr中的currentStyle不满足，则flag为false
+          if (currentStyle != target) {
+            flag = false
+          }
+
+          //设置定时器执行的操作，对于json中已满足条件的attr，其speed已经为0，所以其他未满足条件的attr可以继续变化，知道所有attr满足条件 ，flag持续为true，导致最后用于清楚定时器
+          if (attr == 'opacity') {
+            obj.style[attr] = (currentStyle + speed) / 100
+          } else {
+            obj,style[attr] = currentStyle + speed + 'px'
+          }
+
+          //判断停止标准
+          if (flag) {
+            clearInterval(timer)
+            if(fn) {
+              fn()
+            }
+          }
+        }
+      }, 30)
+    }
+    </script>
+  </head>
+  <body>
+    匀速||变速移动
+    <div id="div1">
+      <span>匀速移动</span>
+    </div>
+    透明度变化
+      <div class="opacity" id="div2" >
+    </div>
+    多物体运动
+    <div id="div3">
+      <div class="move">
+      </div>
+      <div class="move">
+      </div>
+      <div class="move">
+      </div>
+    </div>
+    链式运动
+    <div id="div4">
+      <div class="chain">
+
+      </div>
+      <div class="chain">
+
+      </div>
+    </div>
+    多物体同时运动
+    <div id="div5">
+      <div class="sametime">
+      </div>
+      <div class="sametime">
+
+      </div>
+    </div>
+  </body>
+</html>

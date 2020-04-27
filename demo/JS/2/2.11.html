@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>11.图片框</title>
+
+    <style media="screen">
+      #box .first img {
+    width: inherit;
+    height: inherit;
+}
+      #box .first div {
+    width: 300px;
+    height: 200px;
+    border: 1px solid;
+    border-radius: 5px;
+    margin: 10px auto
+}
+#box li .first {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 156px;
+    height: 100px;
+    opacity: 0.5;
+    filter: back;
+    /* background: black; */
+}
+#box li, #box li img {
+    width: 100px;
+    height: 50px;
+    display: inline;
+}
+#box li .first {
+    position: relative;
+}
+#box li {
+    margin: 3px 3px 0 0;
+}
+#box li, #box li img {
+    /* float: left; */
+}
+body {
+}
+#box {
+    width: 500px;
+    border: 5px solid white;
+    overflow: hidden;
+    background: #fff;
+    border-radius: 5px;
+    margin: 10px auto;
+    padding: 0 0 3px 3px;
+}
+ul {
+    list-style-type: none;
+}
+img {
+    border-radius: 5px;
+}
+body {
+    background: black;
+}
+    </style>
+    <script type="text/javascript">
+      window.onload = function() {
+        var select = document.getElementsByTagName('a')
+        var gallery = document.getElementsByTagName('img')[0]
+        for (var i = 0; i < select.length; i++) {
+          select[i].index = i
+          select[i].onmouseover = function() {
+            gallery.src = (this.index + 1) + '.jpg'
+          }
+        }
+
+      }
+    </script>
+  </head>
+  <body>
+    <ul id="box">
+        <li class="first">
+            <div><img src="1.jpg"></div>
+        </li>
+        <li><a href="javascript:;"><img src="1.jpg"></a></li>
+        <li><a href="javascript:;"><img src="2.jpg"></a></li>
+        <li><a href="javascript:;"><img src="3.jpg"></a></li>
+        <li><a href="javascript:;"><img src="4.jpg"></a></li>
+
+    </ul>
+  </body>
+</html>
