@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="generator" content="Hexo 4.2.0"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>标签: HTTP - kerbalHao</title><meta description="前端, frontend, 程序员, 编程, JavaScript, CSS, HTML, 男, Vue, React, 转行"><meta property="og:type" content="website"><meta property="og:title" content="KerbalHao"><meta property="og:url" content="https://kerbalhao.github.io/"><meta property="og:site_name" content="KerbalHao"><meta property="og:description" content="前端, frontend, 程序员, 编程, JavaScript, CSS, HTML, 男, Vue, React, 转行"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://cdn.jsdelivr.net/gh/kerbalhao/blog_images/avatar.jpg"><meta property="article:author" content="KerbalHao"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="https://cdn.jsdelivr.net/gh/kerbalhao/blog_images/avatar.jpg"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://kerbalhao.github.io/"},"headline":"KerbalHao","image":["https://cdn.jsdelivr.net/gh/kerbalhao/blog_images/avatar.jpg"],"author":{"@type":"Person","name":"KerbalHao"},"description":"前端, frontend, 程序员, 编程, JavaScript, CSS, HTML, 男, Vue, React, 转行"}</script><link rel="alternative" href="/atom.xml" title="kerbalHao" type="application/atom+xml"><link rel="icon" href="https://cdn.jsdelivr.net/gh/removeif/removeif.github.io@latest/img/wico.png"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro|Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Microsoft YaHei:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&amp;amp;subset=latin,latin-ext|Inconsolata|Itim|Lobster.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-dark.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" defer></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.12/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css"><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/kerbalhao/kerbalhao.github.io/css/style.min.css"><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/gh/kerbalhao/kerbalhao.github.io/js/globalUtils.min.js"></script></head><body class="is-3-column has-navbar-fixed-top"><nav class="navbar navbar-main is-fixed-top"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="https://cdn.jsdelivr.net/gh/kerbalhao/blog_images/log.jpg" alt="kerbalHao" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">首页</a><a class="navbar-item" href="/archives">归档</a><a class="navbar-item" href="/categories">分类</a><a class="navbar-item" href="/tags">标签</a><a class="navbar-item" href="/self-talking">碎碎念</a><a class="navbar-item" href="/message">留言</a><a class="navbar-item" href="/about">关于</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/kerbalhao"><i class="fab fa-github"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a><a class="navbar-item" id="night-nav" title="Night Mode" href="javascript:;"><i class="fas fa-moon" id="night-icon"></i></a></div></div></div></nav><script type="text/javascript" src="https://cdn.jsdelivr.net/gh/kerbalhao/kerbalhao.github.io/js/theme-setting.min.js"></script><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-6-widescreen"><div class="card"><div class="card-content"><nav class="breadcrumb" aria-label="breadcrumbs"><ul><li><a href="/tags">标签</a></li><li class="is-active"><a href="#" aria-current="page">HTTP</a></li></ul></nav></div></div><div class="card"><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><time class="level-item" dateTime="2021-03-22T11:48:48.000Z">2021-03-22</time><a class="commentCountImg" href="/posts/b8c7ab12/#comment-container"><span class="display-none-class">2ba7f0b856ca17bdbf8312c0d1d12d72</span><img class="not-gallery-item" src="https://cdn.jsdelivr.net/gh/kerbalhao/kerbalhao.github.io/img/chat.svg"> <span class="commentCount" id="2ba7f0b856ca17bdbf8312c0d1d12d72"> 99+</span>    </a><span class="level-item">20 分钟 读完 (大约 3009 个字)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/posts/b8c7ab12/">基于HTTP网络层的前端性能优化</a></h1><div class="content"><h2 id="从输入-URL-地址到看到页面，HTTP-应用层都经历了什么"><a href="#从输入-URL-地址到看到页面，HTTP-应用层都经历了什么" class="headerlink" title="从输入 URL 地址到看到页面，HTTP 应用层都经历了什么"></a>从输入 URL 地址到看到页面，HTTP 应用层都经历了什么</h2><h3 id="1-url-解析"><a href="#1-url-解析" class="headerlink" title="1. url 解析"></a>1. url 解析</h3><h4 id="url-会包含这些东西："><a href="#url-会包含这些东西：" class="headerlink" title="url 会包含这些东西："></a>url 会包含这些东西：</h4><p>一个 url 会类似这种： <a href="https://asdbc.com:443/index.html?key=value#anchor">https://asdbc.com:443/index.html?key=value#anchor</a><br>对上述的 url 进行解释：协议//域名（服务器地址）：端口号/请求资源的文件路径/?查询字符(key)=值(value)#片段标识符</p>
+<h4 id="url-编码"><a href="#url-编码" class="headerlink" title="url 编码"></a>url 编码</h4><p>根据规定，只有字母和数字 <code>[0-9a-zA-Z]</code>、一些特殊符号”$-_.+!*‘(),”<code>[不包括双引号]</code>、以及某些保留字，才可以不经过编码直接用于 URL。因此，我们需要对 url 进行编码。</p>
+<ul>
+<li>encodeURI(url):它着眼于对整个 URL 进行编码，因此除了常见的符号以外，对其他一些在网址中有特殊含义的符号”; / ? : @ &amp; = + $ , #”，也不进行编码。</li>
+<li>encodeURIComponent(url):与 encodeURI()的区别是，它用于对 URL 的组成部分进行个别编码，而不用于对整个 URL 进行编码。因此，”; / ? : @ &amp; = + $ , #”，这些在 encodeURI()中不被编码的符号，在 encodeURIComponent()中统统会被编码。</li>
+</ul>
+<h3 id="2-缓存检查"><a href="#2-缓存检查" class="headerlink" title="2. 缓存检查"></a>2. 缓存检查</h3><ul>
+<li>在解析 DNS 之前，会先判断是否存在强缓存</li>
+<li>若命中则直接返回缓存内容，</li>
+<li>若无则进行正常流程，进行 DNS 解析，建立 TCP 连接，发送 HTTP 请求</li>
+<li>发送请求时回去验证协商缓存，若命中则返回 304，拿取缓存资源</li>
+</ul>
+<h4 id="强缓存（强缓存命中后是不会发送-http-请求的）"><a href="#强缓存（强缓存命中后是不会发送-http-请求的）" class="headerlink" title="强缓存（强缓存命中后是不会发送 http 请求的）"></a>强缓存（强缓存命中后是不会发送 http 请求的）</h4><h5 id="浏览器对于强缓存的处理：根据第一次请求资源时返回的响应头来确定的"><a href="#浏览器对于强缓存的处理：根据第一次请求资源时返回的响应头来确定的" class="headerlink" title="浏览器对于强缓存的处理：根据第一次请求资源时返回的响应头来确定的"></a>浏览器对于强缓存的处理：根据第一次请求资源时返回的响应头来确定的</h5><ul>
+<li>Expires：缓存过期时间，用来指定资源到期的时间（HTTP/1.0）</li>
+<li>Cache-Control：cache-control: max-age=2592000 第一次拿到资源后的 2592000 秒内（30 天），再次发送请求，读取缓存中的信息（HTTP/1.1）</li>
+<li>两者同时存在的话，Cache-Control 优先级高于 Expires</li>
+</ul>
+<p><a href="https://imgtu.com/i/6oQLE6"><img src="https://z3.ax1x.com/2021/03/22/6oQLE6.png" alt="强缓存.png"></a></p>
+<h5 id="强缓存问题："><a href="#强缓存问题：" class="headerlink" title="强缓存问题："></a>强缓存问题：</h5><ol>
+<li>服务器文件更新，但本地有缓存，则无法拿到最新文件</li>
+<li>HTML 文件一般不做强缓存</li>
+</ol>
+<h5 id="解决方法："><a href="#解决方法：" class="headerlink" title="解决方法："></a>解决方法：</h5><ol>
+<li>服务器更新资源后，让资源名称变更，这样页面将导入全新的资源（webpack 打包文件带 hash 值）</li>
+<li>当文件更新后，在 Html 导入时，设置一个后缀（时间戳）</li>
+</ol>
+<h4 id="协商缓存-Last-Modified-ETag"><a href="#协商缓存-Last-Modified-ETag" class="headerlink" title="协商缓存 Last-Modified / ETag"></a>协商缓存 Last-Modified / ETag</h4><p>协商缓存就是强制缓存失效后，浏览器携带缓存标识向服务器发起请求，由服务器根据缓存标识决定是否使用缓存的过程</p>
+<p><a href="https://imgtu.com/i/6olhZt"><img src="https://z3.ax1x.com/2021/03/22/6olhZt.png" alt="协商缓存.png"></a></p>
+<h5 id="协商缓存流程："><a href="#协商缓存流程：" class="headerlink" title="协商缓存流程："></a>协商缓存流程：</h5><ol>
+<li><p>第一次向服务器发送请求</p>
+<ol>
+<li>没有协商缓存，向服务器发送请求（未传递任何标识）<ul>
+<li>服务请收到请求准备内容</li>
+<li>Last-Modified：资源文件最后更新的时间</li>
+<li>ETag：记录的是一个标识（即根据资源文件更新生成的，每次资源更新都会重新生成一个）</li>
+</ul>
+</li>
+<li>客户端拿到信息后渲染，将信息和标识缓存到本地</li>
+</ol>
+</li>
+<li><p>第二次发请求</p>
+<ol>
+<li>客户端发送 If-Modified-Since 与 If-None-Match<ul>
+<li>If-Modified-Since 对应 Last-Modified 值</li>
+<li>If-None-Match 对应 ETag 值</li>
+</ul>
+</li>
+<li>发送给服务器</li>
+<li>服务器根据标识判断文件是否更新</li>
+</ol>
+</li>
+</ol>
+<h5 id="Last-Modified-与-ETag-区别"><a href="#Last-Modified-与-ETag-区别" class="headerlink" title="Last-Modified 与 ETag 区别"></a>Last-Modified 与 ETag 区别</h5><p>Last-Modified 只能精确到秒，而 ETag 只要有改变就会重新生成</p>
+<h5 id="强缓存和协商好缓存一般只应用于静态资源文件"><a href="#强缓存和协商好缓存一般只应用于静态资源文件" class="headerlink" title="强缓存和协商好缓存一般只应用于静态资源文件"></a>强缓存和协商好缓存一般只应用于静态资源文件</h5><h5 id="数据的缓存，一般由我们自己保存到客户端存储中，根据自己设置的过期时间判断是否需要更新"><a href="#数据的缓存，一般由我们自己保存到客户端存储中，根据自己设置的过期时间判断是否需要更新" class="headerlink" title="数据的缓存，一般由我们自己保存到客户端存储中，根据自己设置的过期时间判断是否需要更新"></a>数据的缓存，一般由我们自己保存到客户端存储中，根据自己设置的过期时间判断是否需要更新</h5><h5 id="协商缓存与强缓存区别："><a href="#协商缓存与强缓存区别：" class="headerlink" title="协商缓存与强缓存区别："></a>协商缓存与强缓存区别：</h5><ul>
+<li>协商缓存总会和服务器协商，所以一定会发 http 请求</li>
+</ul>
+<h3 id="3-DNS-解析"><a href="#3-DNS-解析" class="headerlink" title="3. DNS 解析"></a>3. DNS 解析</h3><p>我们需要对 dns 进行解析才能找到域名对应的 ip 地址，但是 dns 解析也是一个耗时的操作，好在我们也存在 dns 缓存</p>
+<p>对 DNS 缓存进行查询的时候，我们会按照 客户端 =&gt; 浏览器缓存 =&gt; 本地的 hosts 文件 =&gt; 本地 DNS 解析器缓存 =&gt; 本地 DNS 服务器 的方式进行迭代查询</p>
+<p>若无法命中对应的 DNS 缓存，我们就需要对 DNS 服务器进行递归查询了</p>
+<h4 id="优化-DNS-解析过程："><a href="#优化-DNS-解析过程：" class="headerlink" title="优化 DNS 解析过程："></a>优化 DNS 解析过程：</h4><ol>
+<li><p>减少 DNS 请求，一个页面尽可能少用不同的域名，资源都放在相同的服务器中（很少用，因为资源存放的服务器很多，不同服务器压力不同）</p>
+</li>
+<li><p>使用 link 标签实现 dns 预解析：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"x-dns-prefetch-control"</span> <span class="attr">content</span>=<span class="string">"on"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"dns-prefetch"</span> <span class="attr">href</span>=<span class="string">"&lt;url&gt;"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h4 id="服务器拆分优势："><a href="#服务器拆分优势：" class="headerlink" title="服务器拆分优势："></a>服务器拆分优势：</h4><ul>
+<li>资源的合理利用</li>
+<li>抗压能力加强</li>
+<li>提高 HTTP 并发、</li>
+</ul>
+<h3 id="4-TCP-三次握手"><a href="#4-TCP-三次握手" class="headerlink" title="4. TCP 三次握手"></a>4. TCP 三次握手</h3><h4 id="TCP-名词介绍："><a href="#TCP-名词介绍：" class="headerlink" title="TCP 名词介绍："></a>TCP 名词介绍：</h4><ul>
+<li>seq 序号，用来标识从 TCP 源端向目的端发送的字节流，发起方发送数据时对此进行标记</li>
+<li>ack 确认序号，只有 ACK 标志位为 1 时，确认序号字段才有效，ack=seq+1</li>
+<li>标志位<ul>
+<li>ACK：确认序号有效</li>
+<li>RST：重置连接</li>
+<li>SYN：发起一个新连接</li>
+<li>FIN：释放一个连接</li>
+</ul>
+</li>
+</ul>
+<p><a href="https://imgtu.com/i/6oGQlF"><img src="https://z3.ax1x.com/2021/03/22/6oGQlF.png" alt="三次握手.png"></a></p>
+<h4 id="三次握手为什么不用两次，或者四次"><a href="#三次握手为什么不用两次，或者四次" class="headerlink" title="三次握手为什么不用两次，或者四次?"></a>三次握手为什么不用两次，或者四次?</h4><ul>
+<li>TCP 作为一种可靠传输控制协议，其核心思想：既要保证数据可靠传输，又要提高传输的效率！</li>
+<li>我们可以模拟一下三次握手客户端和服务端的应答：<ul>
+<li>客户端：你好（发送后等待服务端应答，确定服务端可以接收和发送数据）</li>
+<li>服务端：你好（发送后等待客户端应答，确定客户端可以接受到数据）</li>
+<li>客户端： 我要发信息了（发送后，双方已经确定对方能够正常收发数据，连接成功建立）</li>
+</ul>
+</li>
+<li>因此，两次握手无法判断客户端可以正常接收到数据，而四次握手则会浪费资源</li>
+</ul>
+<h3 id="5-数据传输"><a href="#5-数据传输" class="headerlink" title="5. 数据传输"></a>5. 数据传输</h3><h4 id="发送-HTTP-请求"><a href="#发送-HTTP-请求" class="headerlink" title="发送 HTTP 请求"></a>发送 HTTP 请求</h4><p>发送请求报文</p>
+<h4 id="HTTP-请求返回"><a href="#HTTP-请求返回" class="headerlink" title="HTTP 请求返回"></a>HTTP 请求返回</h4><p>返回 HTTP 响应</p>
+<h4 id="常见响应状态码"><a href="#常见响应状态码" class="headerlink" title="常见响应状态码"></a>常见响应状态码</h4><ul>
+<li>200 OK</li>
+<li>202 Accepted ：服务器已接受请求，但尚未处理（异步）</li>
+<li>204 No Content：服务器成功处理了请求，但不需要返回任何实体内容</li>
+<li>206 Partial Content：服务器已经成功处理了部分 GET 请求（断点续传 Range/If-Range/Content-Range/Content-Type:”multipart/byteranges”/Content-Length….）</li>
+<li>301 Moved Permanently</li>
+<li>302 Move Temporarily</li>
+<li>304 Not Modified</li>
+<li>305 Use Proxy</li>
+<li>400 Bad Request : 请求参数有误</li>
+<li>401 Unauthorized：权限（Authorization）</li>
+<li>404 Not Found</li>
+<li>405 Method Not Allowed</li>
+<li>408 Request Timeout</li>
+<li>500 Internal Server Error</li>
+<li>503 Service Unavailable</li>
+<li>505 HTTP Version Not Supported</li>
+</ul>
+<h3 id="6-TCP-四次挥手"><a href="#6-TCP-四次挥手" class="headerlink" title="6. TCP 四次挥手"></a>6. TCP 四次挥手</h3><p><a href="https://imgtu.com/i/6oUeRP"><img src="https://z3.ax1x.com/2021/03/22/6oUeRP.png" alt="四次挥手.png"></a></p>
+<h4 id="为什么连接的时候是三次握手，关闭的时候却是四次握手？"><a href="#为什么连接的时候是三次握手，关闭的时候却是四次握手？" class="headerlink" title="为什么连接的时候是三次握手，关闭的时候却是四次握手？"></a>为什么连接的时候是三次握手，关闭的时候却是四次握手？</h4><ul>
+<li>服务器端收到客户端的 SYN 连接请求报文后，可以直接发送 SYN+ACK 报文</li>
+<li>但关闭连接时，当服务器端收到 FIN 报文时，很可能并不会立即关闭链接，所以只能先回复一个 ACK 报文，告诉客户端：“你发的 FIN 报文我收到了”，只有等到服务器端所有的报文都发送完了，我才能发送 FIN 报文，因此不能一起发送，故需要四步握手。</li>
+</ul>
+<h2 id="HTTP1-0-1-1-2-区别"><a href="#HTTP1-0-1-1-2-区别" class="headerlink" title="HTTP1.0/1.1/2 区别"></a>HTTP1.0/1.1/2 区别</h2><h3 id="HTTP-1-0-与-1-1-的一些区别"><a href="#HTTP-1-0-与-1-1-的一些区别" class="headerlink" title="HTTP 1.0 与 1.1 的一些区别"></a>HTTP 1.0 与 1.1 的一些区别</h3><ul>
+<li>缓存处理，HTTP1.0 中主要使用 Last-Modified，Expires 来做为缓存判断的标准，HTTP1.1 则引入了更多的缓存控制策略：ETag，Cache-Control…</li>
+<li>带宽优化及网络连接的使用，HTTP1.1 支持断点续传，即返回码是 206（Partial Content）</li>
+<li>错误通知的管理，在 HTTP1.1 中新增了 24 个错误状态响应码，如 409（Conflict）表示请求的资源与资源的当前状态发生冲突；410（Gone）表示服务器上的某个资源被永久性的删除…</li>
+<li>Host 头处理，在 HTTP1.0 中认为每台服务器都绑定一个唯一的 IP 地址，因此，请求消息中的 URL 并没有传递主机名（hostname）。但随着虚拟主机技术的发展，在一台物理服务器上可以存在多个虚拟主机（Multi-homed Web Servers），并且它们共享一个 IP 地址。HTTP1.1 的请求消息和响应消息都应支持 Host 头域，且请求消息中如果没有 Host 头域会报告一个错误（400 Bad Request）</li>
+<li>长连接，HTTP1.1 中默认开启 Connection： keep-alive，一定程度上弥补了 HTTP1.0 每次请求都要创建连接的缺点</li>
+</ul>
+<h3 id="HTTP2-0和HTTP1-X相比的新特性"><a href="#HTTP2-0和HTTP1-X相比的新特性" class="headerlink" title="HTTP2.0和HTTP1.X相比的新特性"></a>HTTP2.0和HTTP1.X相比的新特性</h3><ul>
+<li>新的二进制格式（Binary Format），HTTP1.x 的解析是基于文本，基于文本协议的格式解析存在天然缺陷，文本的表现形式有多样性，要做到健壮性考虑的场景必然很多，二进制则不同，只认 0 和 1 的组合，基于这种考虑 HTTP2.0 的协议解析决定采用二进制格式，实现方便且健壮</li>
+<li>header 压缩，HTTP1.x 的 header 带有大量信息，而且每次都要重复发送，HTTP2.0 使用 encoder 来减少需要传输的 header 大小，通讯双方各自 cache 一份 header fields 表，既避免了重复 header 的传输，又减小了需要传输的大小</li>
+<li>服务端推送（server push），例如我的网页有一个 sytle.css 的请求，在客户端收到 sytle.css 数据的同时，服务端会将 sytle.js 的文件推送给客户端，当客户端再次尝试获取 sytle.js 时就可以直接从缓存中获取到，不用再发请求了  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 通过在应用生成HTTP响应头信息中设置Link命令</span></span><br><span class="line">Link: &lt;<span class="regexp">/styles.css&gt;; rel=preload; as=style, &lt;/</span>example.png&gt;; rel=preload; <span class="keyword">as</span>=image</span><br></pre></td></tr></table></figure></li>
+<li>多路复用（MultiPlexing）<ul>
+<li>HTTP/1.0  每次请求响应，建立一个TCP连接，用完关闭</li>
+<li>HTTP/1.1 「长连接」 若干个请求排队串行化单线程处理，后面的请求等待前面请求的返回才能获得执行机会，一旦有某请求超时等，后续请求只能被阻塞，毫无办法，也就是人们常说的线头阻塞；</li>
+<li>HTTP/2.0 「多路复用」多个请求可同时在一个连接上并行执行，某个请求任务耗时严重，不会影响到其它连接的正常执行；<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3></li>
+</ul>
+</li>
+</ul>
+<ol>
+<li>利用缓存<ul>
+<li>对于静态资源文件实现强缓存和协商缓存（扩展：文件有更新，如何保证及时刷新？）</li>
+<li>对于不经常更新的接口数据采用本地存储做数据缓存（扩展：cookie / localStorage / vuex|redux 区别？）</li>
+</ul>
+</li>
+<li>DNS 优化<ul>
+<li>分服务器部署，增加 HTTP 并发性（导致 DNS 解析变慢）</li>
+<li>DNS Prefetch</li>
+</ul>
+</li>
+<li>TCP 的三次握手和四次挥手</li>
+</ol>
+<ul>
+<li>利用 Connection:keep-alive 来避免频繁开关 TCP 连接</li>
+</ul>
+<ol start="4">
+<li>数据传输 - 减少数据传输的大小 - 内容或者数据压缩（webpack 等） - 服务器端一定要开启 GZIP 压缩（一般能压缩 60%左右） - 大批量数据分批次请求（例如：下拉刷新或者分页，保证首次加载请求数据少） - 减少 HTTP 请求的次数 - 资源文件合并处理 - 字体图标 - 雪碧图 CSS-Sprit - 图片的 BASE64<br>……</li>
+<li>CDN 服务器“地域分布式”</li>
+<li>采用 HTTP2.0</li>
+</ol>
+</div><div class="index-category-tag"><div class="level-item"><i class="fas fa-folder-open has-text-grey"> </i><a class="article-more button is-small link-muted" href="/categories/HTTP/">HTTP</a></div>  <div class="level-item"><i class="fas fa-tags has-text-grey"> </i><a class="article-more button is-small link-muted" href="/tags/HTTP/">HTTP</a></div></div></article></div></div><div class="column column-left is-4-tablet is-4-desktop is-3-widescreen  order-1 is-sticky"><!--!--><div class="card widget"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="is-rounded" src="https://cdn.jsdelivr.net/gh/kerbalhao/blog_images/avatar.jpg" alt="KerbalHao"></figure><p class="title is-size-4 is-block line-height-inherit">KerbalHao</p><p class="is-size-6 is-block">不咕了，从今天开始种树</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>广州</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">文章</p><a href="/archives"><p class="title">13</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">分类</p><a href="/categories"><p class="title">2</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">标签</p><a href="/tags"><p class="title">5</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="/" target="_blank" rel="noopener">关注我</a></div><div class="level is-mobile"><a class="level-item button is-transparent is-white is-marginless" target="_blank" rel="noopener" title="Github" href="https://github.com/kerbalhao"><i class="fab fa-github"></i></a><a class="level-item button is-transparent is-white is-marginless" target="_blank" rel="noopener" title="Email" href="mailto:kerbalhao@foxmail.com"><i class="fa fa-envelope"></i></a><a class="level-item button is-transparent is-white is-marginless" target="_blank" rel="noopener" title="RSS" href="/atom.xml"><i class="fas fa-rss"></i></a></div><div><hr><p id="hitokoto">:D 一言句子获取中...</p><script type="text/javascript" defer>function getYiyan(){
+                                $.getJSON("https://v1.hitokoto.cn/", function (data) {
+                                if(data){
+                                    $('#hitokoto').html("");
+                                    $('#hitokoto').append("<strong style='color: #3273dc;'>"+data.hitokoto+"</strong>"+
+                                    "<p>"+"来源《"+data.from+"》</p><p>提供者-"+data.creator+"</p>");
+                                }});}
+                                $(function (){getYiyan();$('#hitokoto').click(function(){getYiyan();})});</script></div></div></div><div class="column-right-shadow is-hidden-widescreen"></div></div><div class="column column-right is-4-tablet is-4-desktop is-3-widescreen is-hidden-touch is-hidden-desktop-only order-3"><div class="card widget"><div class="card-content"><div class="menu"><h3 class="menu-label">分类</h3><ul class="menu-list"><li><a class="level is-mobile is-marginless" href="/categories/HTTP/"><span class="level-start"><span class="level-item">HTTP</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/React/"><span class="level-start"><span class="level-item">React</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li></ul></div></div></div><div class="card widget"><div class="card-content"><div class="menu"><h3 class="menu-label">归档</h3><ul class="menu-list"><li><a class="level is-mobile is-marginless" href="/archives/2021/03/"><span class="level-start"><span class="level-item">三月 2021</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile is-marginless" href="/archives/2021/01/"><span class="level-start"><span class="level-item">一月 2021</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/archives/2020/04/"><span class="level-start"><span class="level-item">四月 2020</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile is-marginless" href="/archives/2020/03/"><span class="level-start"><span class="level-item">三月 2020</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/archives/2020/02/"><span class="level-start"><span class="level-item">二月 2020</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><a class="level is-mobile is-marginless" href="/archives/"><span class="level-start"><span class="level-item">查看全部&gt;&gt;</span></span></a></ul></div></div></div><div class="card widget"><div class="card-content"><div class="menu"><h3 class="menu-label">标签</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/JS/"><span class="tag">JS</span><span class="tag is-grey-lightest">9</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Modern-JavaScript-Tutorial/"><span class="tag">Modern JavaScript Tutorial</span><span class="tag is-grey-lightest">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/HTTP/"><span class="tag">HTTP</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Lua/"><span class="tag">Lua</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/React/"><span class="tag">React</span><span class="tag is-grey-lightest">1</span></a></div></div></div></div></div></div></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="https://cdn.jsdelivr.net/gh/kerbalhao/blog_images/log.jpg" alt="kerbalHao" height="28"></a><p class="size-small"><span>&copy; 2021 KerbalHao</span>  Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a>,Modify by <a href="https://github.com/removeif/hexo-theme-amazing" target="_blank">removeif</a> <br><span>© 版权说明：[本网站所有内容均收集于互联网或自己创作,<br>    方便于网友与自己学习交流，如有侵权，请<a href="/message" target="_blank">留言</a>，立即处理]<br></span><div class="size-small"><span id="busuanzi_container_site_uv">❤️感谢<strong> <span id="busuanzi_value_site_uv">99+</span> </strong></span>小伙伴的<strong> <span id="busuanzi_value_site_pv">99+</span> </strong>次光临！❤️</div></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/kerbalhao"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script>moment.locale("zh-CN");</script><script>var IcarusThemeSettings = {
+            site: {
+                url: 'https://kerbalhao.github.io',
+                external_link: {"enable":true,"exclude":[]}
+            },
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script src="https://cdn.jsdelivr.net/gh/kerbalhao/kerbalhao.github.io/js/animation.min.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="https://cdn.jsdelivr.net/gh/kerbalhao/kerbalhao.github.io/js/back-to-top.min.js" defer></script><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.12/dist/js/lightgallery-all.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/gh/kerbalhao/kerbalhao.github.io/js/toc.min.js" defer></script><script src="https://cdn.jsdelivr.net/gh/kerbalhao/kerbalhao.github.io/js/main.min.js" defer></script><script src="https://cdn.jsdelivr.net/gh/kerbalhao/kerbalhao.github.io/js/comment-issue-data.min.js" defer></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/kerbalhao/kerbalhao.github.io/css/insight.min.css"><div class="searchbox ins-search"><div class="searchbox-container ins-search-container"><div class="searchbox-input-wrapper"><input class="searchbox-input ins-search-input" type="text" placeholder="想要查找什么..."><span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span></div><div class="searchbox-result-wrapper ins-section-wrapper"><div class="ins-section-container"></div></div></div></div><script>(function (window) {
+            var INSIGHT_CONFIG = {
+                TRANSLATION: {
+                    POSTS: '文章',
+                    PAGES: '页面',
+                    CATEGORIES: '分类',
+                    TAGS: '标签',
+                    UNTITLED: '(无标题)',
+                },
+                CONTENT_URL: 'https://cdn.jsdelivr.net/gh/kerbalhao/kerbalhao.github.io/content.json',
+            };
+            window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+        })(window);</script><script src="https://cdn.jsdelivr.net/gh/kerbalhao/kerbalhao.github.io/js/insight.min.js" defer></script></body></html>
